@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333"
+    android:gravity="center"
+    tools:context="com.big.simplecash.MainActivity">
+
+
+    <TextView
+        android:id="@+id/item_1"
+        style="@style/naviTheme"
+        android:background="#ff7f50"
+        android:text="测试" />
+
+    <TextView
+        android:id="@+id/item_2"
+        style="@style/naviTheme"
+        android:layout_alignTop="@id/item_1"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/item_1"
+        android:background="#3CB371"
+        android:text="测试" />
+
+    <TextView
+        android:id="@+id/item_3"
+        style="@style/naviTheme"
+        android:layout_below="@id/item_1"
+        android:layout_marginTop="10dp"
+        android:background="#1E90FF"
+        android:text="测试" />
+
+    <TextView
+        android:id="@+id/item_4"
+        style="@style/naviTheme"
+        android:layout_alignLeft="@id/item_2"
+        android:layout_alignTop="@id/item_3"
+        android:background="#FFA500"
+        android:text="测试" />
+
+
+</RelativeLayout>
