@@ -5,17 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.MaterialInfo;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
+import com.big.simplecash.util.SimpleTextWatch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,31 +27,51 @@ import java.util.List;
  * Created by big on 2019/6/11.
  */
 
-public class SaleActivity extends BaseActivity implements View.OnClickListener {
+public class SaleActivity extends BaseActivity implements
+    View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
+    private TextView mSum;
+    private TextView mRate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
         findViewById(R.id.add).setOnClickListener(this);
+        findViewById(R.id.save).setOnClickListener(this);
+        mRate = findViewById(R.id.rate_content);
+        mSum = findViewById(R.id.sum_content);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
-
-//        mAdapter.setData(new ArrayList<MaterialInfo>());
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, MaterialActivity.class);
-        intent.putExtra("from", "sale");
-        startActivityForResult(intent, 101);
+        if (view.getId() == R.id.save) {
+            if (TextUtils.isEmpty(mRate.getText())) {
+                Toast.makeText(SaleActivity.this, "汇率为空", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Intent intent = new Intent(this, MaterialActivity.class);
+            intent.putExtra("from", "sale");
+            startActivityForResult(intent, 101);
+        }
+
+    }
+
+    private void sum() {
+        float sum = 0;
+        for (SaleInfo info : mList) {
+            if (info.materialInfo == null) continue;
+            sum += info.realPrice * info.number;
+        }
+        mSum.setText(sum + "");
     }
 
     @Override
@@ -57,13 +80,14 @@ public class SaleActivity extends BaseActivity implements View.OnClickListener {
             SaleInfo info = new SaleInfo();
             info.materialInfo = Application.mTempInfo;
             info.realPrice = Application.mTempInfo.price;
-            info.total = info.number * info.realPrice;
             mList.add(info);
             Log.d("big", "add");
             mAdapter.notifyDataSetChanged();
+            sum();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
@@ -90,7 +114,7 @@ public class SaleActivity extends BaseActivity implements View.OnClickListener {
                 holder.provide.setText(info.provider);
                 holder.realPrice.setText(saleInfo.realPrice + "");
                 holder.num.setText(saleInfo.number + "");
-                holder.total.setText(saleInfo.total + "");
+                holder.total.setText(saleInfo.realPrice * saleInfo.number + "");
                 Log.d("big", "id:" + info.id);
             }
 
@@ -110,7 +134,7 @@ public class SaleActivity extends BaseActivity implements View.OnClickListener {
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, price, provide, size, del, total,realPrice, num;
+            TextView name, price, provide, size, del, total, realPrice, num;
 
             public MyHolder(View itemView) {
                 super(itemView);
@@ -148,13 +172,51 @@ public class SaleActivity extends BaseActivity implements View.OnClickListener {
                             int position = getAdapterPosition();
                             if (position > 0 && position < mList.size()) {
                                 mList.remove(position);
+                                sum();
                                 notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
+                if (realPrice instanceof EditText) {
+                    realPrice.addTextChangedListener(new SimpleTextWatch() {
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            int position = getAdapterPosition();
+                            if (position > 0 && position < mList.size()) {
+                                SaleInfo info = mList.get(position);
+                                if (TextUtils.isEmpty(realPrice.getText())) {
+                                    info.realPrice = 0;
+                                } else {
+                                    info.realPrice = Float.parseFloat(realPrice.getText().toString());
+                                }
+                                total.setText(info.realPrice * info.number + "");
+                                sum();
+                            }
+                        }
+                    });
+                }
+                if (num instanceof EditText) {
+                    num.addTextChangedListener(new SimpleTextWatch() {
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            int position = getAdapterPosition();
+                            if (position > 0 && position < mList.size()) {
+                                SaleInfo info = mList.get(position);
+                                if (TextUtils.isEmpty(charSequence)) {
+                                    info.number = 0;
+                                } else {
+                                    info.number = Integer.parseInt(charSequence.toString());
+                                }
+                                total.setText(info.realPrice * info.number + "");
+                                sum();
                             }
                         }
                     });
                 }
 
             }
+
         }
     }
 }

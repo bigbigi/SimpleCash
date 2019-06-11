@@ -8,5 +8,4 @@ public class SaleInfo {
     public MaterialInfo materialInfo;
     public int number = 1;
     public float realPrice;
-    public float total;
 }

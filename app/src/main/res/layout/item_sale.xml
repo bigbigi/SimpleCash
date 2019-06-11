@@ -49,7 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000"
-        android:text="现价" />
+        android:digits="0123456789."
+        android:text="进价" />
 
     <View
         android:layout_width="1px"
@@ -75,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000"
+        android:digits="0123456789."
         android:text="数量" />
 
     <View

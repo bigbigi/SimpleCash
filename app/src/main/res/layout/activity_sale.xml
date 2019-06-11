@@ -4,25 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:gravity="center"
-    tools:context="com.big.simplecash.MainActivity">
+    android:background="#fff">
 
-
-    <ImageView
-        android:id="@+id/add"
+    <LinearLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:background="#333333"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_add" />
+        android:background="#ff7f50"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_add" />
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/add" />
+        android:layout_below="@id/title" />
 
+
+    <TextView
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ff7f50"
+        android:gravity="left|center_vertical"
+        android:text="总价："
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/sum_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/sum"
+        android:layout_toRightOf="@id/sum"
+        android:background="#ff7f50"
+        android:gravity="left|center_vertical"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sum"
+        android:layout_marginBottom="1dp"
+        android:background="#ff7f50"
+        android:digits="0123456789."
+        android:gravity="left|center_vertical"
+        android:text="汇率："
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/rate_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/rate"
+        android:layout_toRightOf="@id/rate"
+        android:background="#ff7f50"
+        android:digits="0123456789."
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:textColor="#fff"
+        android:textSize="20dp" />
 
 </RelativeLayout>

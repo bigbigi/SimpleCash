@@ -43,7 +43,7 @@
         android:id="@+id/item_real_price"
         style="@style/itemTitle"
         android:layout_weight="1"
-        android:text="现价" />
+        android:text="进价" />
 
     <View
         android:layout_width="1px"
