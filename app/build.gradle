@@ -25,6 +25,7 @@ android {
         schemaVersion 1
         daoPackage 'com.big.simplecash.greendao'
     }
+
 }
 
 dependencies {

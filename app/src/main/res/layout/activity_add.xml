@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ccc"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="名称:"
+            android:textColor="#333"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#333" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textColor="#333"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ccc"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="规格:"
+            android:textColor="#333"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#333" />
+
+        <EditText
+            android:id="@+id/size"
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textColor="#333"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ccc"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="价格:"
+            android:textColor="#333"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#333" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:digits="0123456789."
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textColor="#333"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ccc"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="店铺:"
+            android:textColor="#333"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#333" />
+
+        <EditText
+            android:id="@+id/provider"
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textColor="#333"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="#ccc"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#333"
+        android:textSize="20dp" />
+</LinearLayout>

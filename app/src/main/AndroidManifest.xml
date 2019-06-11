@@ -3,6 +3,7 @@
     package="com.big.simplecash">
 
     <application
+        android:name="com.big.simplecash.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.big.simplecash.material.MaterialActivity"/>
+        <activity android:name="com.big.simplecash.material.MaterialActivity" />
+        <activity android:name="com.big.simplecash.AddActivity" />
+        <activity android:name="com.big.simplecash.SaleActivity" />
     </application>
 
 </manifest>

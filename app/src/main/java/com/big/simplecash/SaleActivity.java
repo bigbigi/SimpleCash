@@ -1,13 +1,10 @@
-package com.big.simplecash.material;
+package com.big.simplecash;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,98 +12,72 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.big.simplecash.AddActivity;
-import com.big.simplecash.Application;
-import com.big.simplecash.BaseActivity;
-import com.big.simplecash.R;
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.MaterialInfo;
+import com.big.simplecash.greendao.SaleInfo;
+import com.big.simplecash.material.MaterialActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by big on 2019/6/10.
+ * Created by big on 2019/6/11.
  */
 
-public class MaterialActivity extends BaseActivity implements View.OnClickListener {
+public class SaleActivity extends BaseActivity implements View.OnClickListener {
+
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
-    private EditText mSearchEdit;
+    List<SaleInfo> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material);
+        setContentView(R.layout.activity_sale);
         findViewById(R.id.add).setOnClickListener(this);
-        mSearchEdit = findViewById(R.id.search_name);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setData(GreenDaoUtils.getAllRecord());
-        mSearchEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (TextUtils.isEmpty(mSearchEdit.getText())) {
-                    mAdapter.setData(GreenDaoUtils.getAllRecord());
-                } else {
-                    mAdapter.setData(GreenDaoUtils.getMaterialInfoByName(mSearchEdit.getText().toString()));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        mAdapter.setData(new ArrayList<MaterialInfo>());
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivityForResult(intent, 100);
+        Intent intent = new Intent(this, MaterialActivity.class);
+        intent.putExtra("from", "sale");
+        startActivityForResult(intent, 101);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100 && resultCode == 100) {
-            Log.d("big", "result");
-            if (TextUtils.isEmpty(mSearchEdit.getText())) {
-                mAdapter.setData(GreenDaoUtils.getAllRecord());
-            } else {
-                mAdapter.setData(GreenDaoUtils.getMaterialInfoByName(mSearchEdit.getText().toString()));
-            }
-
+        if (requestCode == 101 && resultCode == 100) {
+            SaleInfo info = new SaleInfo();
+            info.materialInfo = Application.mTempInfo;
+            info.realPrice = Application.mTempInfo.price;
+            info.total = info.number * info.realPrice;
+            mList.add(info);
+            Log.d("big", "add");
+            mAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
-        List<MaterialInfo> mList = new ArrayList<>();
 
-        public void setData(List<MaterialInfo> list) {
-            if (list != null) {
-                mList = list;
-                mList.add(0, new MaterialInfo());
-                notifyDataSetChanged();
-            }
-        }
 
         @Override
-        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View content = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-            return new MyHolder(content);
+            return new MyAdapter.MyHolder(content);
         }
 
         @Override
-        public void onBindViewHolder(MyHolder holder, int position) {
-            MaterialInfo info = mList.get(position);
+        public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
+            SaleInfo saleInfo = mList.get(position);
+            MaterialInfo info = saleInfo.materialInfo;
             if (position % 2 != 0) {
                 holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
@@ -117,8 +88,12 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                 holder.size.setText(info.size);
                 holder.price.setText(String.valueOf(info.price));
                 holder.provide.setText(info.provider);
+                holder.realPrice.setText(saleInfo.realPrice + "");
+                holder.num.setText(saleInfo.number + "");
+                holder.total.setText(saleInfo.total + "");
+                Log.d("big", "id:" + info.id);
             }
-            Log.d("big", "id:" + info.id);
+
         }
 
         @Override
@@ -129,13 +104,13 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
         @Override
         public int getItemViewType(int position) {
             if (position == 0) {
-                return R.layout.item_material_title;
+                return R.layout.item_sale_title;
             }
-            return R.layout.item_material;
+            return R.layout.item_sale;
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, price, provide, size, del;
+            TextView name, price, provide, size, del, total,realPrice, num;
 
             public MyHolder(View itemView) {
                 super(itemView);
@@ -144,6 +119,9 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                 price = itemView.findViewById(R.id.item_price);
                 provide = itemView.findViewById(R.id.item_provider);
                 del = itemView.findViewById(R.id.item_del);
+                realPrice = itemView.findViewById(R.id.item_real_price);
+                num = itemView.findViewById(R.id.item_num);
+                total = itemView.findViewById(R.id.item_total);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
@@ -160,10 +138,6 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                             if (del != null) {
                                 del.setVisibility(View.GONE);
                             }
-                        } else if("sale".equals(getIntent().getStringExtra("from"))){
-                            Application.mTempInfo = mList.get(getAdapterPosition());
-                            setResult(100);
-                            finish();
                         }
                     }
                 });
@@ -173,9 +147,7 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                         public void onClick(View view) {
                             int position = getAdapterPosition();
                             if (position > 0 && position < mList.size()) {
-                                MaterialInfo info = mList.get(position);
-                                GreenDaoUtils.deleteMaterialInfo(info);
-                                mList.remove(getAdapterPosition());
+                                mList.remove(position);
                                 notifyDataSetChanged();
                             }
                         }
@@ -185,5 +157,4 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
-
 }
