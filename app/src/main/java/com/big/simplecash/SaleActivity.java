@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.MaterialInfo;
+import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
 import com.big.simplecash.util.SimpleTextWatch;
@@ -54,8 +56,10 @@ public class SaleActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            if (TextUtils.isEmpty(mRate.getText())) {
-                Toast.makeText(SaleActivity.this, "汇率为空", Toast.LENGTH_LONG).show();
+            if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
+                Toast.makeText(SaleActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
+            } else {
+                save();
             }
         } else {
             Intent intent = new Intent(this, MaterialActivity.class);
@@ -65,10 +69,24 @@ public class SaleActivity extends BaseActivity implements
 
     }
 
+    private Order mOrder;
+
+    private void save() {
+        if (mOrder == null) {
+            mOrder = new Order();
+            mOrder.createDate = System.currentTimeMillis();
+        }
+        mOrder.createContent(mList);
+        mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
+        mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
+        GreenDaoUtils.insertOrder(mOrder);
+        Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+    }
+
     private void sum() {
         float sum = 0;
         for (SaleInfo info : mList) {
-            if (info.materialInfo == null) continue;
+            if (info.price == 0) continue;
             sum += info.realPrice * info.number;
         }
         mSum.setText(sum + "");
@@ -78,8 +96,11 @@ public class SaleActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101 && resultCode == 100) {
             SaleInfo info = new SaleInfo();
-            info.materialInfo = Application.mTempInfo;
-            info.realPrice = Application.mTempInfo.price;
+            info.name = Application.mTempInfo.name;
+            info.price = Application.mTempInfo.price;
+            info.realPrice = info.price;
+            info.size = Application.mTempInfo.size;
+            info.provider = Application.mTempInfo.provider;
             mList.add(info);
             Log.d("big", "add");
             mAdapter.notifyDataSetChanged();
@@ -101,21 +122,19 @@ public class SaleActivity extends BaseActivity implements
         @Override
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
-            MaterialInfo info = saleInfo.materialInfo;
             if (position % 2 != 0) {
                 holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
             }
             if (position != 0) {
-                holder.name.setText(info.name);
-                holder.size.setText(info.size);
-                holder.price.setText(String.valueOf(info.price));
-                holder.provide.setText(info.provider);
+                holder.name.setText(saleInfo.name);
+                holder.size.setText(saleInfo.size);
+                holder.price.setText(String.valueOf(saleInfo.price));
+                holder.provide.setText(saleInfo.provider);
                 holder.realPrice.setText(saleInfo.realPrice + "");
                 holder.num.setText(saleInfo.number + "");
                 holder.total.setText(saleInfo.realPrice * saleInfo.number + "");
-                Log.d("big", "id:" + info.id);
             }
 
         }

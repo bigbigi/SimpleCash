@@ -20,6 +20,8 @@
         <activity android:name="com.big.simplecash.material.MaterialActivity" />
         <activity android:name="com.big.simplecash.AddActivity" />
         <activity android:name="com.big.simplecash.SaleActivity" />
+        <activity android:name="com.big.simplecash.OrderListActivity" />
+
     </application>
 
 </manifest>

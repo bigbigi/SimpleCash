@@ -94,4 +94,68 @@ public class GreenDaoUtils {
     public static void deleteMaterialInfo(MaterialInfo info) {
         getMaterialInfoDao().delete(info);
     }
+
+    /***************************************/
+    private static OrderDao getOrderDao() {
+        return GreenDaoManager.getInstance().getOrderDao();
+    }
+
+    public static List<Order> getOrder() {
+        List<Order> list = new ArrayList<>();
+        try {
+            QueryBuilder<Order> ql = getOrderDao().queryBuilder();
+            list = ql.orderDesc(OrderDao.Properties.CreateDate).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "getRecord list =" + list);
+        return list;
+    }
+
+    public static void insertOrder(Order record) {
+        if (record == null) {
+            return;
+        }
+        boolean flag = false;
+        try {
+            if (!updateOrder(record)) {
+                Log.i(TAG, "insertRecord real insert ");
+                getOrderDao().insert(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "insertRecord flag = " + flag);
+        }
+
+    }
+
+    private static boolean updateOrder(Order record) {
+        if (record == null) {
+            return false;
+        }
+        boolean flag = false;
+        try {
+            QueryBuilder<Order> ql = getOrderDao().queryBuilder();
+            ql.where(OrderDao.Properties.Id.eq(record.id));
+            List<Order> list = ql.limit(1).list();
+            Log.i(TAG, "updateRecord list1 = " + list);
+            if (!ListUtils.isEmpty(list)) {
+                record.id = list.get(0).id;
+                Log.i(TAG, "updateRecord record._id = " + record.id);
+                getOrderDao().update(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "updateRecord flag = " + flag);
+        }
+        return flag;
+    }
+
+    public static void deleteOrder(Order info) {
+        getOrderDao().delete(info);
+    }
 }

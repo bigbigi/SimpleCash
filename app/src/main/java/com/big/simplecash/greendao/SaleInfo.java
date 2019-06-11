@@ -5,7 +5,11 @@ package com.big.simplecash.greendao;
  */
 
 public class SaleInfo {
-    public MaterialInfo materialInfo;
+    public String name;
+    public float price;
+    public String provider;
+    public String size;
     public int number = 1;
     public float realPrice;
+    public float salePrice;
 }

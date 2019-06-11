@@ -90,6 +90,7 @@
         android:layout_toRightOf="@id/rate"
         android:background="#ff7f50"
         android:digits="0123456789."
+        android:inputType=""
         android:gravity="left|center_vertical"
         android:maxLines="1"
         android:textColor="#fff"
