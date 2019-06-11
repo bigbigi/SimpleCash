@@ -56,5 +56,6 @@
         android:layout_weight="1"
         android:background="#ff0000"
         android:visibility="gone"
+        android:gravity="center"
         android:text="删除" />
 </LinearLayout>

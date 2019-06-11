@@ -1,9 +1,12 @@
 package com.big.simplecash.greendao;
 
+import android.text.TextUtils;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.util.List;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
@@ -20,7 +23,7 @@ public class Order {
 
     @Generated(hash = 1448860270)
     public Order(Long id, long createDate, String content, float rate,
-            float totalPurchase) {
+                 float totalPurchase) {
         this.id = id;
         this.createDate = createDate;
         this.content = content;
@@ -35,6 +38,7 @@ public class Order {
     public void createContent(List<SaleInfo> list) {
         StringBuilder sb = new StringBuilder();
         for (SaleInfo info : list) {
+            if(TextUtils.isEmpty(info.name)) continue;
             sb.append(info.name).append("|")
                 .append(info.size).append("|")
                 .append(info.price).append("|")
@@ -45,6 +49,22 @@ public class Order {
                 .append("&&");
         }
         content = sb.toString();
+    }
+
+    public void parseList(List<SaleInfo> list) {
+        String[] sales = content.split("&&");
+        for (String sale : sales) {
+            String[] fields = sale.split("\\|");
+            SaleInfo info = new SaleInfo();
+            info.name = fields[0];
+            info.size = fields[1];
+            info.price = Float.parseFloat(fields[2]);
+            info.provider = fields[3];
+            info.realPrice = Float.parseFloat(fields[4]);
+            info.salePrice = Float.parseFloat(fields[5]);
+            info.number = Integer.parseInt(fields[6]);
+            list.add(info);
+        }
     }
 
     public Long getId() {

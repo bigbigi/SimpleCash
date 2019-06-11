@@ -51,6 +51,12 @@ public class SaleActivity extends BaseActivity implements
         mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        if ("list".equals(getIntent().getStringExtra("from"))) {
+            mOrder = Application.mTempOrder;
+            mOrder.parseList(mList);
+            mRate.setText(mOrder.rate + "");
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

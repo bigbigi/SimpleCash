@@ -13,6 +13,12 @@
         android:text="名称" />
 
     <TextView
+        android:id="@+id/item_total"
+        style="@style/itemTheme"
+        android:layout_weight="1"
+        android:text="总价" />
+
+    <TextView
         android:id="@+id/item_del"
         style="@style/itemTheme"
         android:layout_weight="1"

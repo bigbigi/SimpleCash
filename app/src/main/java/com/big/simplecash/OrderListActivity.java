@@ -64,6 +64,7 @@ public class OrderListActivity extends BaseActivity {
                 holder.itemView.setBackgroundColor(0xffffffff);
             }
             holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.total.setText("HK$ " + info.totalPurchase);
         }
 
         @Override
@@ -77,11 +78,12 @@ public class OrderListActivity extends BaseActivity {
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, del;
+            TextView name, total, del;
 
             public MyHolder(View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.item_name);
+                total = itemView.findViewById(R.id.item_total);
                 del = itemView.findViewById(R.id.item_del);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -102,6 +104,7 @@ public class OrderListActivity extends BaseActivity {
                         } else {
                             Intent intent = new Intent(OrderListActivity.this, SaleActivity.class);
                             intent.putExtra("from", "list");
+                            Application.mTempOrder = mList.get(getAdapterPosition());
                             startActivity(intent);
                         }
                     }
@@ -111,7 +114,7 @@ public class OrderListActivity extends BaseActivity {
                         @Override
                         public void onClick(View view) {
                             int position = getAdapterPosition();
-                            if (position > 0 && position < mList.size()) {
+                            if (position >= 0 && position < mList.size()) {
                                 Order info = mList.get(position);
                                 GreenDaoUtils.deleteOrder(info);
                                 mList.remove(getAdapterPosition());

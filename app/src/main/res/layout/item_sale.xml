@@ -94,9 +94,10 @@
     <TextView
         android:id="@+id/item_del"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#ff0000"
+        android:gravity="center"
         android:text="删除"
         android:visibility="gone" />
 </LinearLayout>

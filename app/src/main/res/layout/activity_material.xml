@@ -8,6 +8,11 @@
     android:gravity="center"
     tools:context="com.big.simplecash.MainActivity">
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true" />
+
     <EditText
         android:id="@+id/search_name"
         android:layout_width="match_parent"
