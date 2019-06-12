@@ -1,5 +1,7 @@
 package com.big.simplecash.util;
 
+import android.util.Log;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
@@ -37,6 +39,7 @@ public class Base64 {
         for (int group = 0; group < numGroups; group++) {
             convert3To4(sourceBytes, group * 3, targetBytes);
             for (int i = 0; i < targetBytes.length; i++) {
+                Log.d("big","group:"+(i + 4 * group)+",i:"+i);
                 target[i + 4 * group] = KEY.charAt(targetBytes[i]);
             }
         }

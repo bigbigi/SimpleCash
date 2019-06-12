@@ -97,7 +97,7 @@ public class SettlementActivity extends BaseActivity implements
         } else if (view.getId() == R.id.output) {
             if (save()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipboard.setPrimaryClip(ClipData.newPlainText("text", Base64.encode(mOrder.outPut())));
+                clipboard.setPrimaryClip(ClipData.newPlainText("text", Utils.compress(mOrder.outPut())));
                 Toast.makeText(this, "导出成功", Toast.LENGTH_LONG).show();
             }
         } else {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
+import com.big.simplecash.util.CallBack;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ import java.util.Locale;
  * Created by big on 2019/6/11.
  */
 
-public class OrderListActivity extends BaseActivity {
-    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm", Locale.CHINA);
+public class OrderListActivity extends BaseActivity implements View.OnClickListener {
+    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YY/MM/dd-HH:mm", Locale.CHINA);
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
 
@@ -32,11 +33,40 @@ public class OrderListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
+        findViewById(R.id.add).setOnClickListener(this);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setData(GreenDaoUtils.getOrder());
+    }
+
+    InputDialog mInputDialog;
+
+    @Override
+    public void onClick(View view) {
+        if (mInputDialog == null) {
+            mInputDialog = new InputDialog(this);
+            mInputDialog.setCallback(new CallBack<Order>() {
+                @Override
+                public void onCallBack(Order order) {
+                    if (order != null) {
+                        GreenDaoUtils.insertOrder(order);
+                        mAdapter.setData(GreenDaoUtils.getOrder());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+        mInputDialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
@@ -58,12 +88,13 @@ public class OrderListActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             Order info = mList.get(position);
-            if (position % 2 != 0) {
+            if (position % 2 == 0) {
                 holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
             }
             holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.modify.setText(mSimpleDateFormat.format(new Date(info.modifyTime)));
             holder.total.setText("HK$ " + info.totalPurchase);
         }
 
@@ -78,13 +109,14 @@ public class OrderListActivity extends BaseActivity {
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, total, del;
+            TextView name, total, del, modify;
 
             public MyHolder(View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.item_name);
                 total = itemView.findViewById(R.id.item_total);
                 del = itemView.findViewById(R.id.item_del);
+                modify = itemView.findViewById(R.id.item_modify);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {

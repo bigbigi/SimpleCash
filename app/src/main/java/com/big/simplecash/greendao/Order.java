@@ -17,6 +17,7 @@ public class Order {
     @Id(autoincrement = true)
     public Long id;
     public long createDate;
+    public long modifyTime;
     public String content;
     public float rate;
     public float totalPurchase;
@@ -32,7 +33,8 @@ public class Order {
             .append(totalPurchase).append("#^")
             .append(cost).append("#^")
             .append(transIn).append("#^")
-            .append(transOut).append("#^");
+            .append(transOut).append("#^")
+            .append(modifyTime).append("#^");
         return sb.toString();
     }
 
@@ -47,17 +49,20 @@ public class Order {
             order.cost = Float.parseFloat(fields[4]);
             order.transIn = Float.parseFloat(fields[5]);
             order.transOut = Float.parseFloat(fields[6]);
+            order.modifyTime = Long.parseLong(fields[7]);
         } catch (Exception e) {
             return null;
         }
         return order;
     }
 
-    @Generated(hash = 2022067922)
-    public Order(Long id, long createDate, String content, float rate,
-                 float totalPurchase, float cost, float transIn, float transOut) {
+    @Generated(hash = 2064887723)
+    public Order(Long id, long createDate, long modifyTime, String content,
+            float rate, float totalPurchase, float cost, float transIn,
+            float transOut) {
         this.id = id;
         this.createDate = createDate;
+        this.modifyTime = modifyTime;
         this.content = content;
         this.rate = rate;
         this.totalPurchase = totalPurchase;
@@ -164,6 +169,14 @@ public class Order {
 
     public void setTransOut(float transOut) {
         this.transOut = transOut;
+    }
+
+    public long getModifyTime() {
+        return this.modifyTime;
+    }
+
+    public void setModifyTime(long modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.util.Base64;
 import com.big.simplecash.util.CallBack;
+import com.big.simplecash.util.Utils;
 
 
 /**
@@ -45,7 +46,7 @@ public class InputDialog extends Dialog implements View.OnClickListener {
         dismiss();
         if(view.getId()==R.id.confirm){
             if (!TextUtils.isEmpty(mInput.getText())) {
-                Order order = Order.intPut(Base64.decode(String.valueOf(mInput.getText())));
+                Order order = Order.intPut(Utils.unCompress(String.valueOf(mInput.getText())));
                 if (mCallBack != null) {
                     mCallBack.onCallBack(order);
                 }

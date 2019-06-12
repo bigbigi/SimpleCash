@@ -58,14 +58,18 @@ public class SaleActivity extends BaseActivity implements
         mRecyclerView.setAdapter(mAdapter);
         if ("list".equals(getIntent().getStringExtra("from"))) {
             mOrder = Application.mTempOrder;
-            mOrder.parseList(mList);
-            mRate.setText(mOrder.rate + "");
-            mCost.setText(mOrder.cost + "");
-            mSum.setText(mOrder.totalPurchase + "");
-            mTransIn.setText(mOrder.transIn + "");
-            mTransOut.setText(mOrder.transOut + "");
-            mAdapter.notifyDataSetChanged();
+            readOrder();
         }
+    }
+
+    private void readOrder() {
+        mOrder.parseList(mList);
+        mRate.setText(mOrder.rate + "");
+        mCost.setText(mOrder.cost + "");
+        mSum.setText(mOrder.totalPurchase + "");
+        mTransIn.setText(mOrder.transIn + "");
+        mTransOut.setText(mOrder.transOut + "");
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,6 +105,7 @@ public class SaleActivity extends BaseActivity implements
             if (mOrder == null) {
                 mOrder = new Order();
                 mOrder.createDate = System.currentTimeMillis();
+                mOrder.modifyTime = mOrder.createDate;
             }
             mOrder.createContent(mList);
             mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));

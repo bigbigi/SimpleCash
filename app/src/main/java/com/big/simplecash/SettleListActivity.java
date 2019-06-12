@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 
 public class SettleListActivity extends BaseActivity implements View.OnClickListener {
-    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm", Locale.CHINA);
+    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YY/MM/dd-HH:mm", Locale.CHINA);
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
 
@@ -61,6 +61,14 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         mInputDialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         List<Order> mList = new ArrayList<>();
 
@@ -80,12 +88,13 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             Order info = mList.get(position);
-            if (position % 2 != 0) {
+            if (position % 2 == 0) {
                 holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
             }
             holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.modify.setText(mSimpleDateFormat.format(new Date(info.modifyTime)));
             holder.total.setText("HK$ " + info.totalPurchase);
         }
 
@@ -100,13 +109,14 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, total, del;
+            TextView name, total, del, modify;
 
             public MyHolder(View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.item_name);
                 total = itemView.findViewById(R.id.item_total);
                 del = itemView.findViewById(R.id.item_del);
+                modify = itemView.findViewById(R.id.item_modify);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {

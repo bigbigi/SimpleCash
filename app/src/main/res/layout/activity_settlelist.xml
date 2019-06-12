@@ -18,12 +18,44 @@
         android:textColor="#fff"
         android:textSize="20dp" />
 
+    <LinearLayout
+        android:id="@+id/navi"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/title">
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="创建时间" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="修改时间" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="采购额度" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title" />
+        android:layout_above="@+id/add"
+        android:layout_below="@id/navi" />
 
     <TextView
         android:id="@+id/add"

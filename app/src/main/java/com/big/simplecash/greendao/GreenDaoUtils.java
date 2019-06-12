@@ -95,7 +95,7 @@ public class GreenDaoUtils {
         getMaterialInfoDao().delete(info);
     }
 
-    /***************************************/
+    /*******************订单********************/
     private static OrderDao getOrderDao() {
         return GreenDaoManager.getInstance().getOrderDao();
     }
@@ -143,6 +143,7 @@ public class GreenDaoUtils {
             Log.i(TAG, "updateRecord list1 = " + list);
             if (!ListUtils.isEmpty(list)) {
                 record.id = list.get(0).id;
+                record.modifyTime = System.currentTimeMillis();
                 Log.i(TAG, "updateRecord record._id = " + record.id);
                 getOrderDao().update(record);
                 flag = true;
@@ -158,6 +159,7 @@ public class GreenDaoUtils {
     public static void deleteOrder(Order info) {
         getOrderDao().delete(info);
     }
+
     /*******************结算************************/
 
     private static OrderDao getSettleDao() {
@@ -207,6 +209,7 @@ public class GreenDaoUtils {
             Log.i(TAG, "updateRecord list1 = " + list);
             if (!ListUtils.isEmpty(list)) {
                 record.id = list.get(0).id;
+                record.modifyTime = System.currentTimeMillis();
                 Log.i(TAG, "updateRecord record._id = " + record.id);
                 getSettleDao().update(record);
                 flag = true;
