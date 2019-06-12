@@ -21,6 +21,7 @@ import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
+import com.big.simplecash.util.Base64;
 import com.big.simplecash.util.SimpleTextWatch;
 import com.big.simplecash.util.Utils;
 
@@ -93,10 +94,10 @@ public class SettlementActivity extends BaseActivity implements
             if (save()) {
                 Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
             }
-        }else if (view.getId() == R.id.output) {
+        } else if (view.getId() == R.id.output) {
             if (save()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipboard.setPrimaryClip(ClipData.newPlainText("text", mOrder.outPut()));
+                clipboard.setPrimaryClip(ClipData.newPlainText("text", Base64.encode(mOrder.outPut())));
                 Toast.makeText(this, "导出成功", Toast.LENGTH_LONG).show();
             }
         } else {
@@ -137,7 +138,7 @@ public class SettlementActivity extends BaseActivity implements
             if (info.price == 0) continue;
             sum += info.salePrice * info.number;
         }
-        float profit = sum + mOrder.transIn - mOrder.transOut - mOrder.rate * mOrder.totalPurchase;
+        float profit = sum + mOrder.transIn - mOrder.transOut - mOrder.cost - mOrder.rate * mOrder.totalPurchase;
         mTotalSale.setText(String.format("%.1f", sum));
         mProfit.setText(String.format("%.1f", profit));
     }
@@ -163,7 +164,7 @@ public class SettlementActivity extends BaseActivity implements
             if (position != 0) {
                 holder.name.setText(saleInfo.name);
                 holder.size.setText(saleInfo.size);
-                holder.salePrice.setText(String.valueOf(saleInfo.salePrice));
+                holder.salePrice.setText(Utils.getText(saleInfo.salePrice));
                 holder.provide.setText(saleInfo.provider);
                 holder.realPrice.setText(saleInfo.realPrice + "");
                 holder.num.setText(saleInfo.number + "");

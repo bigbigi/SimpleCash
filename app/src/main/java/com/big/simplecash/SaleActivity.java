@@ -21,6 +21,7 @@ import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
 import com.big.simplecash.util.SimpleTextWatch;
+import com.big.simplecash.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +171,7 @@ public class SaleActivity extends BaseActivity implements
                 holder.size.setText(saleInfo.size);
                 holder.price.setText(String.valueOf(saleInfo.price));
                 holder.provide.setText(saleInfo.provider);
-                holder.realPrice.setText(saleInfo.realPrice + "");
+                holder.realPrice.setText(Utils.getText(saleInfo.realPrice));
                 holder.num.setText(saleInfo.number + "");
                 holder.total.setText(saleInfo.realPrice * saleInfo.number + "");
             }

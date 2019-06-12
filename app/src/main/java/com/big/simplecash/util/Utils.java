@@ -15,4 +15,12 @@ public class Utils {
             return Float.parseFloat(String.valueOf(textView.getText()));
         }
     }
+
+    public static String getText(float f) {
+        if (f == 0) {
+            return "";
+        } else {
+            return f + "";
+        }
+    }
 }
