@@ -173,6 +173,7 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                         public void onClick(View view) {
                             int position = getAdapterPosition();
                             if (position > 0 && position < mList.size()) {
+                                del.setVisibility(View.GONE);
                                 MaterialInfo info = mList.get(position);
                                 GreenDaoUtils.deleteMaterialInfo(info);
                                 mList.remove(getAdapterPosition());

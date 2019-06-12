@@ -115,6 +115,7 @@ public class OrderListActivity extends BaseActivity {
                         public void onClick(View view) {
                             int position = getAdapterPosition();
                             if (position >= 0 && position < mList.size()) {
+                                del.setVisibility(View.GONE);
                                 Order info = mList.get(position);
                                 GreenDaoUtils.deleteOrder(info);
                                 mList.remove(getAdapterPosition());

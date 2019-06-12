@@ -230,6 +230,7 @@ public class SaleActivity extends BaseActivity implements
                         public void onClick(View view) {
                             int position = getAdapterPosition();
                             if (position > 0 && position < mList.size()) {
+                                del.setVisibility(View.GONE);
                                 mList.remove(position);
                                 sum();
                                 notifyDataSetChanged();

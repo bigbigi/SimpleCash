@@ -32,7 +32,7 @@
         android:id="@+id/item_real_price"
         style="@style/itemTitle"
         android:layout_weight="1"
-        android:text="进价" />
+        android:text="进价$" />
 
     <View
         android:layout_width="1px"
@@ -43,7 +43,7 @@
         android:id="@+id/item_sale_price"
         style="@style/itemTitle"
         android:layout_weight="1"
-        android:text="售价" />
+        android:text="售价￥" />
 
     <View
         android:layout_width="1px"
