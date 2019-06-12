@@ -15,6 +15,7 @@ import java.util.Map;
 public class GreenDaoManager {
     public static final String sDBRECORD = "material.db";
     public static final String ORDER_DB = "order.db";
+    public static final String SETTLE_DB = "settle.db";
 
 
     private static GreenDaoManager mInstance;
@@ -57,6 +58,15 @@ public class GreenDaoManager {
     public OrderDao getOrderDao() {
         try {
             return getDaoSession(ORDER_DB).getOrderDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public OrderDao getSettleDao() {
+        try {
+            return getDaoSession(SETTLE_DB).getOrderDao();
         } catch (Exception e) {
             e.printStackTrace();
         }

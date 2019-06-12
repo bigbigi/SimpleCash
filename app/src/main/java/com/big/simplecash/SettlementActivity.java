@@ -20,6 +20,7 @@ import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
 import com.big.simplecash.util.SimpleTextWatch;
+import com.big.simplecash.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,18 +36,23 @@ public class SettlementActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost,mTransIn, mTransOut;;
+    private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settlement);
         findViewById(R.id.save).setOnClickListener(this);
+        findViewById(R.id.input).setOnClickListener(this);
+        findViewById(R.id.output).setOnClickListener(this);
         mRate = findViewById(R.id.rate_content);
         mCost = findViewById(R.id.cost_content);
         mSum = findViewById(R.id.sum_content);
         mTransIn = findViewById(R.id.trans_in_content);
         mTransOut = findViewById(R.id.trans_out_content);
+        mProfit = findViewById(R.id.profit_content);
+        mTotalSale = findViewById(R.id.total_sale_content);
+
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
@@ -58,16 +64,39 @@ public class SettlementActivity extends BaseActivity implements
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
         mSum.setText(mOrder.totalPurchase + "");
+        mTransIn.setText(mOrder.transIn + "");
+        mTransOut.setText(mOrder.transOut + "");
+        mTotalSale.setText(mOrder.totalSale + "");
+        mProfit.setText(mOrder.profit + "");
         mAdapter.notifyDataSetChanged();
+        mTransIn.addTextChangedListener(new SimpleTextWatch() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                super.onTextChanged(charSequence, i, i1, i2);
+                mOrder.transIn = Utils.getTextFloat(mTransIn);
+                sum();
+            }
+        });
+        mTransOut.addTextChangedListener(new SimpleTextWatch() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                super.onTextChanged(charSequence, i, i1, i2);
+                mOrder.transOut = Utils.getTextFloat(mTransOut);
+                sum();
+            }
+        });
+        sum();
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
-                Toast.makeText(SettlementActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
-            } else {
-                save();
+            save();
+        } else if (view.getId() == R.id.input) {
+
+        } else if (view.getId() == R.id.output) {
+            if (save()) {
+
             }
         } else {
             Intent intent = new Intent(this, MaterialActivity.class);
@@ -79,37 +108,39 @@ public class SettlementActivity extends BaseActivity implements
 
     private Order mOrder;
 
-    private void save() {
-        if (mOrder == null) {
-            mOrder = new Order();
-            mOrder.createDate = System.currentTimeMillis();
-        }
-        mOrder.createContent(mList);
-        mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
-        mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
-        mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
+    private boolean save() {
+        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
+            Toast.makeText(SettlementActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            if (mOrder == null) {
+                mOrder = new Order();
+                mOrder.createDate = System.currentTimeMillis();
+            }
+            mOrder.createContent(mList);
+            mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
+            mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
+            mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
 
-        if (TextUtils.isEmpty(mTransIn.getText())) {
-            mOrder.transIn = 0;
-        } else {
-            mOrder.transIn = Float.parseFloat(String.valueOf(mTransIn.getText()));
+            mOrder.transIn = Utils.getTextFloat(mTransIn);
+            mOrder.transOut = Utils.getTextFloat(mTransOut);
+
+            GreenDaoUtils.insertSettle(mOrder);
+            Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
+            return true;
         }
-        if (TextUtils.isEmpty(mTransOut.getText())) {
-            mOrder.transOut = 0;
-        } else {
-            mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
-        }
-        GreenDaoUtils.insertOrder(mOrder);
-        Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
     }
 
     private void sum() {
         float sum = 0;
         for (SaleInfo info : mList) {
             if (info.price == 0) continue;
-            sum += info.realPrice * info.number;
+            sum += info.salePrice * info.number;
         }
-        mSum.setText(sum + "");
+        mOrder.totalSale = sum;
+        mOrder.profit = sum + mOrder.transIn - mOrder.transOut - mOrder.rate * mOrder.totalPurchase;
+        mTotalSale.setText(String.format("%.1f", mOrder.totalSale));
+        mProfit.setText(String.format("%.1f", mOrder.profit));
     }
 
 
@@ -181,6 +212,7 @@ public class SettlementActivity extends BaseActivity implements
                                     info.salePrice = Float.parseFloat(salePrice.getText().toString());
                                 }
                                 profit.setText(String.format("%.1f", (info.salePrice - mOrder.rate * info.realPrice) * info.number) + "");
+                                sum();
                             }
                         }
                     });

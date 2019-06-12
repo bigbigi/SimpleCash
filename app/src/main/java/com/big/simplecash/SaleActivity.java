@@ -60,6 +60,9 @@ public class SaleActivity extends BaseActivity implements
             mOrder.parseList(mList);
             mRate.setText(mOrder.rate + "");
             mCost.setText(mOrder.cost + "");
+            mSum.setText(mOrder.totalPurchase + "");
+            mTransIn.setText(mOrder.transIn + "");
+            mTransOut.setText(mOrder.transOut + "");
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -112,7 +115,7 @@ public class SaleActivity extends BaseActivity implements
                 mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
             }
             GreenDaoUtils.insertOrder(mOrder);
-            Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "订单保存成功", Toast.LENGTH_LONG).show();
             return true;
         }
     }

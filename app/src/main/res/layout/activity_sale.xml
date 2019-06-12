@@ -51,6 +51,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/rate"
         android:layout_below="@id/title" />
 
 
@@ -155,8 +156,8 @@
         android:id="@+id/rate_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/rate"
         android:layout_alignRight="@id/middle"
+        android:layout_alignTop="@id/rate"
         android:layout_toRightOf="@id/rate"
         android:background="#ff7f50"
         android:digits="0123456789."

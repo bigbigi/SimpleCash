@@ -158,4 +158,68 @@ public class GreenDaoUtils {
     public static void deleteOrder(Order info) {
         getOrderDao().delete(info);
     }
+    /*******************结算************************/
+
+    private static OrderDao getSettleDao() {
+        return GreenDaoManager.getInstance().getSettleDao();
+    }
+
+    public static List<Order> getSettles() {
+        List<Order> list = new ArrayList<>();
+        try {
+            QueryBuilder<Order> ql = getSettleDao().queryBuilder();
+            list = ql.orderDesc(OrderDao.Properties.CreateDate).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "getRecord list =" + list);
+        return list;
+    }
+
+    public static void insertSettle(Order record) {
+        if (record == null) {
+            return;
+        }
+        boolean flag = false;
+        try {
+            if (!updateSettle(record)) {
+                Log.i(TAG, "insertRecord real insert ");
+                getSettleDao().insert(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "insertRecord flag = " + flag);
+        }
+
+    }
+
+    private static boolean updateSettle(Order record) {
+        if (record == null) {
+            return false;
+        }
+        boolean flag = false;
+        try {
+            QueryBuilder<Order> ql = getSettleDao().queryBuilder();
+            ql.where(OrderDao.Properties.Id.eq(record.id));
+            List<Order> list = ql.limit(1).list();
+            Log.i(TAG, "updateRecord list1 = " + list);
+            if (!ListUtils.isEmpty(list)) {
+                record.id = list.get(0).id;
+                Log.i(TAG, "updateRecord record._id = " + record.id);
+                getSettleDao().update(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "updateRecord flag = " + flag);
+        }
+        return flag;
+    }
+
+    public static void deleteSettle(Order info) {
+        getSettleDao().delete(info);
+    }
 }

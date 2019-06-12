@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fff">
 
+
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -29,7 +30,6 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:focusableInTouchMode="true"
             android:gravity="center"
             android:text="保存"
             android:textColor="#fff"
@@ -53,6 +53,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/rate"
         android:layout_below="@id/title" />
 
 
@@ -60,18 +61,69 @@
         android:id="@+id/middle"
         android:layout_width="1px"
         android:layout_height="1px"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:focusableInTouchMode="true" />
 
     <TextView
-        android:id="@+id/sum"
+        android:id="@+id/total_sale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
+        android:text="营收：￥ "
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/total_sale_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/middle"
+        android:layout_alignTop="@id/total_sale"
+        android:layout_toRightOf="@id/total_sale"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/profit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/total_sale"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:text="利润：￥ "
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+
+    <TextView
+        android:id="@+id/profit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/profit"
+        android:layout_toRightOf="@id/profit"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/total_sale"
+        android:layout_marginBottom="1px"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
         android:text="采购价：HK$ "
         android:textColor="#fff"
         android:textSize="20dp" />
+
 
     <TextView
         android:id="@+id/sum_content"
@@ -83,7 +135,6 @@
         android:gravity="left|center_vertical"
         android:textColor="#fff"
         android:textSize="20dp" />
-
 
     <TextView
         android:id="@+id/trans_in"

@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, MaterialActivity.class));
         } else if (view.getId() == R.id.item_3) {
             startActivity(new Intent(this, OrderListActivity.class));
+        } else if (view.getId() == R.id.item_4) {
+            startActivity(new Intent(this, SettleListActivity.class));
         }
     }
 }
