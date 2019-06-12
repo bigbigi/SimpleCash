@@ -26,38 +26,38 @@
         android:layout_weight="1"
         android:text="规格" />
 
+
     <View
         android:layout_width="1px"
         android:layout_height="match_parent"
         android:background="#5e333333" />
 
     <TextView
-        android:id="@+id/item_price"
-        style="@style/itemTheme"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="原价" />
-
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:background="#5e333333" />
-
-    <EditText
         android:id="@+id/item_real_price"
         style="@style/itemTheme"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#00000000"
-        android:digits="0123456789."
-        android:inputType="number"
-        android:text="进价" />
+        android:background="#00000000"/>
 
     <View
         android:layout_width="1px"
         android:layout_height="match_parent"
         android:background="#5e333333" />
 
+
+    <EditText
+        android:id="@+id/item_sale_price"
+        style="@style/itemTheme"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#00000000"
+        android:inputType="number"
+        android:digits="0123456789."/>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="#5e333333" />
 
     <TextView
         android:id="@+id/item_provider"
@@ -71,14 +71,13 @@
         android:layout_height="match_parent"
         android:background="#5e333333" />
 
-    <EditText
+    <TextView
         android:id="@+id/item_num"
         style="@style/itemTheme"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000"
         android:digits="0123456789."
-        android:inputType="number"
         android:text="数量" />
 
     <View
@@ -87,11 +86,11 @@
         android:background="#5e333333" />
 
     <TextView
-        android:id="@+id/item_total"
+        android:id="@+id/item_profit"
         style="@style/itemTheme"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="小计" />
+        android:text="利润" />
 
     <TextView
         android:id="@+id/item_del"

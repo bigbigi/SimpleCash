@@ -13,7 +13,7 @@
         android:id="@+id/item_1"
         style="@style/naviTheme"
         android:background="#ff7f50"
-        android:text="测试" />
+        android:text="下单" />
 
     <TextView
         android:id="@+id/item_2"
@@ -22,7 +22,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/item_1"
         android:background="#3CB371"
-        android:text="测试" />
+        android:text="商品" />
 
     <TextView
         android:id="@+id/item_3"
@@ -30,7 +30,7 @@
         android:layout_below="@id/item_1"
         android:layout_marginTop="10dp"
         android:background="#1E90FF"
-        android:text="测试" />
+        android:text="订单" />
 
     <TextView
         android:id="@+id/item_4"
@@ -38,7 +38,7 @@
         android:layout_alignLeft="@id/item_2"
         android:layout_alignTop="@id/item_3"
         android:background="#FFA500"
-        android:text="测试" />
+        android:text="结算" />
 
 
 </RelativeLayout>

@@ -36,7 +36,7 @@ public class SaleActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate;
+    private TextView mRate, mCost;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,9 @@ public class SaleActivity extends BaseActivity implements
         setContentView(R.layout.activity_sale);
         findViewById(R.id.add).setOnClickListener(this);
         findViewById(R.id.save).setOnClickListener(this);
+        findViewById(R.id.settle).setOnClickListener(this);
         mRate = findViewById(R.id.rate_content);
+        mCost = findViewById(R.id.cost_content);
         mSum = findViewById(R.id.sum_content);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -55,6 +57,7 @@ public class SaleActivity extends BaseActivity implements
             mOrder = Application.mTempOrder;
             mOrder.parseList(mList);
             mRate.setText(mOrder.rate + "");
+            mCost.setText(mOrder.cost + "");
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -62,10 +65,12 @@ public class SaleActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
-                Toast.makeText(SaleActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
-            } else {
-                save();
+            save();
+        } else if (view.getId() == R.id.settle) {
+            if (save()) {
+                Intent intent = new Intent(this, SettlementActivity.class);
+                Application.mSettlementOrder = mOrder;
+                startActivity(intent);
             }
         } else {
             Intent intent = new Intent(this, MaterialActivity.class);
@@ -77,16 +82,24 @@ public class SaleActivity extends BaseActivity implements
 
     private Order mOrder;
 
-    private void save() {
-        if (mOrder == null) {
-            mOrder = new Order();
-            mOrder.createDate = System.currentTimeMillis();
+    private boolean save() {
+        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1
+            || TextUtils.isEmpty(mCost.getText())) {
+            Toast.makeText(SaleActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            if (mOrder == null) {
+                mOrder = new Order();
+                mOrder.createDate = System.currentTimeMillis();
+            }
+            mOrder.createContent(mList);
+            mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
+            mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
+            mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
+            GreenDaoUtils.insertOrder(mOrder);
+            Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+            return true;
         }
-        mOrder.createContent(mList);
-        mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
-        mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
-        GreenDaoUtils.insertOrder(mOrder);
-        Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
     }
 
     private void sum() {
@@ -180,17 +193,18 @@ public class SaleActivity extends BaseActivity implements
                         return true;
                     }
                 });
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (del.getVisibility() == View.VISIBLE) {
-                            if (del != null) {
-                                del.setVisibility(View.GONE);
+
+                if (del != null) {
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (del.getVisibility() == View.VISIBLE) {
+                                if (del != null) {
+                                    del.setVisibility(View.GONE);
+                                }
                             }
                         }
-                    }
-                });
-                if (del != null) {
+                    });
                     del.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

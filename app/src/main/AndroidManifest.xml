@@ -21,7 +21,7 @@
         <activity android:name="com.big.simplecash.AddActivity" />
         <activity android:name="com.big.simplecash.SaleActivity" />
         <activity android:name="com.big.simplecash.OrderListActivity" />
-
+        <activity android:name="com.big.simplecash.SettlementActivity" />
     </application>
 
 </manifest>

@@ -17,12 +17,13 @@
         android:id="@+id/search_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#ddd"
+        android:background="#3CB371"
         android:gravity="center"
         android:hint="请输入要查询的名称"
         android:maxLines="1"
         android:scaleType="centerInside"
-        android:textColor="#333"
+        android:textColor="#fff"
+        android:textColorHint="#ddd"
         android:textSize="20dp" />
 
     <ImageView
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="#333333"
+        android:background="#3CB371"
         android:scaleType="centerInside"
         android:src="@drawable/ic_add" />
 

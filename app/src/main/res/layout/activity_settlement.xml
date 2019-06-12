@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:orientation="horizontal">
 
 
@@ -25,25 +25,6 @@
             android:textColor="#fff"
             android:textSize="20dp" />
 
-
-        <ImageView
-            android:id="@+id/add"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_add" />
-
-        <TextView
-            android:id="@+id/settle"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="结算"
-            android:textColor="#fff"
-            android:textSize="20dp" />
     </LinearLayout>
 
 
@@ -59,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:gravity="left|center_vertical"
         android:text="采购价：HK$ "
         android:textColor="#fff"
@@ -71,61 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/sum"
         android:layout_toRightOf="@id/sum"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:textColor="#fff"
-        android:textSize="20dp" />
-
-
-    <TextView
-        android:id="@+id/trans_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/sum"
-        android:layout_marginBottom="1dp"
-        android:background="#ff7f50"
-        android:gravity="left|center_vertical"
-        android:text="运费收入：￥ "
-        android:textColor="#fff"
-        android:textSize="20dp" />
-
-    <EditText
-        android:id="@+id/trans_in_content"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/trans_in"
-        android:layout_toRightOf="@id/trans_in"
-        android:background="#ff7f50"
-        android:digits="0123456789."
-        android:gravity="left|center_vertical"
-        android:inputType="number"
-        android:textColor="#fff"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/trans_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/trans_in"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@id/trans_in_content"
-        android:background="#ff7f50"
-        android:gravity="left|center_vertical"
-        android:text="运费支出：￥ "
-        android:textColor="#fff"
-        android:textSize="20dp" />
-
-    <EditText
-        android:id="@+id/trans_out_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/trans_out"
-        android:layout_toRightOf="@id/trans_out"
-        android:background="#ff7f50"
-        android:digits="0123456789."
-        android:gravity="left|center_vertical"
-        android:inputType="number"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -133,25 +61,25 @@
         android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/trans_in"
+        android:layout_above="@id/sum"
         android:layout_marginBottom="1dp"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
         android:text="汇率："
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/rate_content"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/rate"
         android:layout_toRightOf="@id/rate"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
+        android:inputType=""
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -164,24 +92,22 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="1dp"
         android:layout_toRightOf="@id/rate_content"
-        android:background="#ff7f50"
+        android:background="#FFA500"
         android:gravity="left|center_vertical"
         android:text="其他成本：￥"
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/cost_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/cost"
         android:layout_toRightOf="@id/cost"
-        android:background="#ff7f50"
-        android:digits="0123456789."
+        android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:inputType="number"
+        android:inputType=""
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
-
 </RelativeLayout>

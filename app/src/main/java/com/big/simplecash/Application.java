@@ -12,6 +12,7 @@ public class Application extends android.app.Application {
 
     public static MaterialInfo mTempInfo;
     public static Order mTempOrder;
+    public static Order mSettlementOrder;
 
     @Override
     public void onCreate() {
