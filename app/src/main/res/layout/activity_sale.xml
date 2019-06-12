@@ -54,6 +54,12 @@
         android:layout_below="@id/title" />
 
 
+    <View
+        android:id="@+id/middle"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/sum"
         android:layout_width="wrap_content"
@@ -82,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/sum"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="1px"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
         android:text="运费收入：￥ "
@@ -91,14 +97,16 @@
 
     <EditText
         android:id="@+id/trans_in_content"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@id/middle"
         android:layout_alignTop="@id/trans_in"
         android:layout_toRightOf="@id/trans_in"
         android:background="#ff7f50"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
         android:inputType="number"
+        android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -107,9 +115,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/trans_in"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@id/trans_in_content"
+        android:layout_marginBottom="1px"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
         android:text="运费支出：￥ "
@@ -126,6 +134,7 @@
         android:digits="0123456789."
         android:gravity="left|center_vertical"
         android:inputType="number"
+        android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -134,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/trans_in"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="1px"
         android:background="#ff7f50"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
@@ -144,9 +153,10 @@
 
     <EditText
         android:id="@+id/rate_content"
-        android:layout_width="120dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/rate"
+        android:layout_alignRight="@id/middle"
         android:layout_toRightOf="@id/rate"
         android:background="#ff7f50"
         android:digits="0123456789."
@@ -161,9 +171,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/rate"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@id/rate_content"
+        android:layout_marginBottom="1px"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
         android:text="其他成本：￥"

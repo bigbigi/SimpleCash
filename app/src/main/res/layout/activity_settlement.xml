@@ -35,6 +35,12 @@
         android:layout_below="@id/title" />
 
 
+    <View
+        android:id="@+id/middle"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:id="@+id/sum"
         android:layout_width="wrap_content"
@@ -57,12 +63,68 @@
         android:textColor="#fff"
         android:textSize="20dp" />
 
+
+    <TextView
+        android:id="@+id/trans_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sum"
+        android:layout_marginBottom="1px"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:text="运费收入：￥ "
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/trans_in_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/middle"
+        android:layout_alignTop="@id/trans_in"
+        android:layout_toRightOf="@id/trans_in"
+        android:background="#FFA500"
+        android:digits="0123456789."
+        android:gravity="left|center_vertical"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/trans_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/trans_in"
+        android:layout_marginBottom="1px"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:text="运费支出：￥ "
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/trans_out_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/trans_out"
+        android:layout_toRightOf="@id/trans_out"
+        android:background="#FFA500"
+        android:digits="0123456789."
+        android:gravity="left|center_vertical"
+        android:inputType="number"
+        android:maxLines="1"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
     <TextView
         android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/sum"
-        android:layout_marginBottom="1dp"
+        android:layout_above="@id/trans_in"
+        android:layout_marginBottom="1px"
         android:background="#FFA500"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
@@ -70,16 +132,17 @@
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/rate_content"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/rate"
+        android:layout_alignRight="@id/middle"
         android:layout_toRightOf="@id/rate"
         android:background="#FFA500"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType=""
+        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -89,24 +152,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/rate"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_toRightOf="@id/rate_content"
+        android:layout_marginBottom="1px"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
         android:text="其他成本：￥"
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/cost_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/cost"
         android:layout_toRightOf="@id/cost"
         android:background="#FFA500"
+        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType=""
+        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />

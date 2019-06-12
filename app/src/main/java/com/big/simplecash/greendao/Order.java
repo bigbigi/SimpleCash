@@ -25,15 +25,17 @@ public class Order {
     public float transOut;
 
 
-    @Generated(hash = 188935198)
+    @Generated(hash = 2022067922)
     public Order(Long id, long createDate, String content, float rate,
-            float totalPurchase, float cost) {
+            float totalPurchase, float cost, float transIn, float transOut) {
         this.id = id;
         this.createDate = createDate;
         this.content = content;
         this.rate = rate;
         this.totalPurchase = totalPurchase;
         this.cost = cost;
+        this.transIn = transIn;
+        this.transOut = transOut;
     }
 
     @Generated(hash = 1105174599)
@@ -118,5 +120,21 @@ public class Order {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public float getTransIn() {
+        return this.transIn;
+    }
+
+    public void setTransIn(float transIn) {
+        this.transIn = transIn;
+    }
+
+    public float getTransOut() {
+        return this.transOut;
+    }
+
+    public void setTransOut(float transOut) {
+        this.transOut = transOut;
     }
 }
