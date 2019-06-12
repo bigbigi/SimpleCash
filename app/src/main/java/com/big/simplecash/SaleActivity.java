@@ -70,7 +70,9 @@ public class SaleActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            save();
+            if (save()) {
+                Toast.makeText(this, "订单保存成功", Toast.LENGTH_LONG).show();
+            }
         } else if (view.getId() == R.id.settle) {
             if (save()) {
                 Intent intent = new Intent(this, SettlementActivity.class);
@@ -115,7 +117,6 @@ public class SaleActivity extends BaseActivity implements
                 mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
             }
             GreenDaoUtils.insertOrder(mOrder);
-            Toast.makeText(this, "订单保存成功", Toast.LENGTH_LONG).show();
             return true;
         }
     }

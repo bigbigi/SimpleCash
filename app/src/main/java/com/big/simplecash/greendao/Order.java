@@ -23,14 +23,39 @@ public class Order {
     public float cost;
     public float transIn;
     public float transOut;
-    public float totalSale;
-    public float profit;
 
+    public String outPut() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(createDate).append("#^")
+            .append(content).append("#^")
+            .append(rate).append("#^")
+            .append(totalPurchase).append("#^")
+            .append(cost).append("#^")
+            .append(transIn).append("#^")
+            .append(transOut).append("#^");
+        return sb.toString();
+    }
 
-    @Generated(hash = 234476358)
+    public static Order intPut(String s) {
+        Order order = new Order();
+        try {
+            String fields[] = s.split("#\\^");
+            order.createDate = Long.parseLong(fields[0]);
+            order.content = fields[1];
+            order.rate = Float.parseFloat(fields[2]);
+            order.totalPurchase = Float.parseFloat(fields[3]);
+            order.cost = Float.parseFloat(fields[4]);
+            order.transIn = Float.parseFloat(fields[5]);
+            order.transOut = Float.parseFloat(fields[6]);
+        } catch (Exception e) {
+            return null;
+        }
+        return order;
+    }
+
+    @Generated(hash = 2022067922)
     public Order(Long id, long createDate, String content, float rate,
-            float totalPurchase, float cost, float transIn, float transOut,
-            float totalSale, float profit) {
+                 float totalPurchase, float cost, float transIn, float transOut) {
         this.id = id;
         this.createDate = createDate;
         this.content = content;
@@ -39,8 +64,6 @@ public class Order {
         this.cost = cost;
         this.transIn = transIn;
         this.transOut = transOut;
-        this.totalSale = totalSale;
-        this.profit = profit;
     }
 
     @Generated(hash = 1105174599)
@@ -50,7 +73,7 @@ public class Order {
     public void createContent(List<SaleInfo> list) {
         StringBuilder sb = new StringBuilder();
         for (SaleInfo info : list) {
-            if(TextUtils.isEmpty(info.name)) continue;
+            if (TextUtils.isEmpty(info.name)) continue;
             sb.append(info.name).append("|")
                 .append(info.size).append("|")
                 .append(info.price).append("|")
@@ -143,19 +166,4 @@ public class Order {
         this.transOut = transOut;
     }
 
-    public float getTotalSale() {
-        return this.totalSale;
-    }
-
-    public void setTotalSale(float totalSale) {
-        this.totalSale = totalSale;
-    }
-
-    public float getProfit() {
-        return this.profit;
-    }
-
-    public void setProfit(float profit) {
-        this.profit = profit;
-    }
 }

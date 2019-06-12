@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
+import com.big.simplecash.util.CallBack;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Locale;
  * Created by big on 2019/6/11.
  */
 
-public class SettleListActivity extends BaseActivity {
+public class SettleListActivity extends BaseActivity implements View.OnClickListener {
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm", Locale.CHINA);
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -32,11 +33,32 @@ public class SettleListActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settlelist);
+        findViewById(R.id.add).setOnClickListener(this);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setData(GreenDaoUtils.getSettles());
+    }
+
+    InputDialog mInputDialog;
+
+    @Override
+    public void onClick(View view) {
+        if (mInputDialog == null) {
+            mInputDialog = new InputDialog(this);
+            mInputDialog.setCallback(new CallBack<Order>() {
+                @Override
+                public void onCallBack(Order order) {
+                    if (order != null) {
+                        GreenDaoUtils.insertSettle(order);
+                        mAdapter.setData(GreenDaoUtils.getSettles());
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+        mInputDialog.show();
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {

@@ -1,5 +1,7 @@
 package com.big.simplecash;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,7 +45,6 @@ public class SettlementActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settlement);
         findViewById(R.id.save).setOnClickListener(this);
-        findViewById(R.id.input).setOnClickListener(this);
         findViewById(R.id.output).setOnClickListener(this);
         mRate = findViewById(R.id.rate_content);
         mCost = findViewById(R.id.cost_content);
@@ -66,8 +67,6 @@ public class SettlementActivity extends BaseActivity implements
         mSum.setText(mOrder.totalPurchase + "");
         mTransIn.setText(mOrder.transIn + "");
         mTransOut.setText(mOrder.transOut + "");
-        mTotalSale.setText(mOrder.totalSale + "");
-        mProfit.setText(mOrder.profit + "");
         mAdapter.notifyDataSetChanged();
         mTransIn.addTextChangedListener(new SimpleTextWatch() {
             @Override
@@ -91,12 +90,14 @@ public class SettlementActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            save();
-        } else if (view.getId() == R.id.input) {
-
-        } else if (view.getId() == R.id.output) {
             if (save()) {
-
+                Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
+            }
+        }else if (view.getId() == R.id.output) {
+            if (save()) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(ClipData.newPlainText("text", mOrder.outPut()));
+                Toast.makeText(this, "导出成功", Toast.LENGTH_LONG).show();
             }
         } else {
             Intent intent = new Intent(this, MaterialActivity.class);
@@ -126,7 +127,6 @@ public class SettlementActivity extends BaseActivity implements
             mOrder.transOut = Utils.getTextFloat(mTransOut);
 
             GreenDaoUtils.insertSettle(mOrder);
-            Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
             return true;
         }
     }
@@ -137,10 +137,9 @@ public class SettlementActivity extends BaseActivity implements
             if (info.price == 0) continue;
             sum += info.salePrice * info.number;
         }
-        mOrder.totalSale = sum;
-        mOrder.profit = sum + mOrder.transIn - mOrder.transOut - mOrder.rate * mOrder.totalPurchase;
-        mTotalSale.setText(String.format("%.1f", mOrder.totalSale));
-        mProfit.setText(String.format("%.1f", mOrder.profit));
+        float profit = sum + mOrder.transIn - mOrder.transOut - mOrder.rate * mOrder.totalPurchase;
+        mTotalSale.setText(String.format("%.1f", sum));
+        mProfit.setText(String.format("%.1f", profit));
     }
 
 
