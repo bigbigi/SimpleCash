@@ -36,7 +36,7 @@ public class SaleActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost;
+    private TextView mRate, mCost, mTransIn, mTransOut;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class SaleActivity extends BaseActivity implements
         mRate = findViewById(R.id.rate_content);
         mCost = findViewById(R.id.cost_content);
         mSum = findViewById(R.id.sum_content);
+        mTransIn = findViewById(R.id.trans_in_content);
+        mTransOut = findViewById(R.id.trans_out_content);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
@@ -83,9 +85,11 @@ public class SaleActivity extends BaseActivity implements
     private Order mOrder;
 
     private boolean save() {
-        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1
-            || TextUtils.isEmpty(mCost.getText())) {
+        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
             Toast.makeText(SaleActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (TextUtils.isEmpty(mCost.getText())) {
+            Toast.makeText(SaleActivity.this, "其他成本为空", Toast.LENGTH_LONG).show();
             return false;
         } else {
             if (mOrder == null) {
@@ -96,6 +100,17 @@ public class SaleActivity extends BaseActivity implements
             mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
             mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
             mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
+
+            if (TextUtils.isEmpty(mTransIn.getText())) {
+                mOrder.transIn = 0;
+            } else {
+                mOrder.transIn = Float.parseFloat(String.valueOf(mTransIn.getText()));
+            }
+            if (TextUtils.isEmpty(mTransOut.getText())) {
+                mOrder.transOut = 0;
+            } else {
+                mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
+            }
             GreenDaoUtils.insertOrder(mOrder);
             Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
             return true;

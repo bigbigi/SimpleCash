@@ -35,7 +35,7 @@ public class SettlementActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost;
+    private TextView mRate, mCost,mTransIn, mTransOut;;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class SettlementActivity extends BaseActivity implements
         mRate = findViewById(R.id.rate_content);
         mCost = findViewById(R.id.cost_content);
         mSum = findViewById(R.id.sum_content);
+        mTransIn = findViewById(R.id.trans_in_content);
+        mTransOut = findViewById(R.id.trans_out_content);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
@@ -54,8 +56,8 @@ public class SettlementActivity extends BaseActivity implements
         mOrder = Application.mSettlementOrder;
         mOrder.parseList(mList);
         mRate.setText(mOrder.rate + "");
-        mCost.setText(mOrder.cost+"");
-        mSum.setText(mOrder.totalPurchase+"");
+        mCost.setText(mOrder.cost + "");
+        mSum.setText(mOrder.totalPurchase + "");
         mAdapter.notifyDataSetChanged();
     }
 
@@ -85,6 +87,18 @@ public class SettlementActivity extends BaseActivity implements
         mOrder.createContent(mList);
         mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
         mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
+        mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
+
+        if (TextUtils.isEmpty(mTransIn.getText())) {
+            mOrder.transIn = 0;
+        } else {
+            mOrder.transIn = Float.parseFloat(String.valueOf(mTransIn.getText()));
+        }
+        if (TextUtils.isEmpty(mTransOut.getText())) {
+            mOrder.transOut = 0;
+        } else {
+            mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
+        }
         GreenDaoUtils.insertOrder(mOrder);
         Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
     }
@@ -123,7 +137,7 @@ public class SettlementActivity extends BaseActivity implements
                 holder.provide.setText(saleInfo.provider);
                 holder.realPrice.setText(saleInfo.realPrice + "");
                 holder.num.setText(saleInfo.number + "");
-                holder.profit.setText((saleInfo.salePrice - mOrder.rate * saleInfo.realPrice) * saleInfo.number + "");
+                holder.profit.setText(String.format("%.1f", (saleInfo.salePrice - mOrder.rate * saleInfo.realPrice) * saleInfo.number));
             }
         }
 
@@ -166,7 +180,7 @@ public class SettlementActivity extends BaseActivity implements
                                 } else {
                                     info.salePrice = Float.parseFloat(salePrice.getText().toString());
                                 }
-                                profit.setText((info.salePrice - mOrder.rate * info.realPrice) * info.number + "");
+                                profit.setText(String.format("%.1f", (info.salePrice - mOrder.rate * info.realPrice) * info.number) + "");
                             }
                         }
                     });

@@ -99,6 +99,7 @@
             android:layout_height="match_parent"
             android:background="#ccc"
             android:digits="0123456789."
+            android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:textColor="#333"
