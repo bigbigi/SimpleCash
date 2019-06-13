@@ -102,7 +102,7 @@ public class GreenDaoManager {
                         daoSession = daoMaster.newSession();
                         mapDaoSession.put(dbName, daoSession);
                     } else {
-                        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mContext, dbName);
+                        DaoMaster.DevOpenHelper helper = new MyOpenHelper(mContext, dbName);
                         mapOpenHelper.put(dbName, helper);
                         DaoMaster daoMaster = new DaoMaster(helper.getWritableDatabase());
                         mapDaoMaster.put(dbName, daoMaster);
