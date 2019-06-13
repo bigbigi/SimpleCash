@@ -89,9 +89,9 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         public void onBindViewHolder(MyHolder holder, int position) {
             Order info = mList.get(position);
             if (position % 2 == 0) {
-                holder.itemView.setBackgroundColor(0xffdddddd);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
-                holder.itemView.setBackgroundColor(0xffffffff);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
             holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
             holder.modify.setText(mSimpleDateFormat.format(new Date(info.modifyTime)));

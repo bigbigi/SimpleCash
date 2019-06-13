@@ -157,9 +157,9 @@ public class SettlementActivity extends BaseActivity implements
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
             if (position % 2 != 0) {
-                holder.itemView.setBackgroundColor(0xffdddddd);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
-                holder.itemView.setBackgroundColor(0xffffffff);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
             if (position != 0) {
                 holder.name.setText(saleInfo.name);

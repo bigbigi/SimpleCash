@@ -108,9 +108,9 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
         public void onBindViewHolder(MyHolder holder, int position) {
             MaterialInfo info = mList.get(position);
             if (position % 2 != 0) {
-                holder.itemView.setBackgroundColor(0xffdddddd);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
-                holder.itemView.setBackgroundColor(0xffffffff);
+                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
             if (position != 0) {
                 holder.name.setText(info.name);
@@ -160,7 +160,7 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                             if (del != null) {
                                 del.setVisibility(View.GONE);
                             }
-                        } else if("sale".equals(getIntent().getStringExtra("from"))){
+                        } else if ("sale".equals(getIntent().getStringExtra("from"))) {
                             Application.mTempInfo = mList.get(getAdapterPosition());
                             setResult(100);
                             finish();
