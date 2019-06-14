@@ -33,7 +33,7 @@
         <View
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/output"
@@ -125,6 +125,32 @@
         android:layout_toRightOf="@id/sum"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/sum"
+        android:layout_marginLeft="1px"
+        android:layout_toRightOf="@id/middle"
+        android:background="#FFA500"
+        android:gravity="left|center_vertical"
+        android:text="优惠：HK$ "
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/discount_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/discount"
+        android:layout_toRightOf="@id/discount"
+        android:background="#FFA500"
+        android:digits="0123456789."
+        android:gravity="left|center_vertical"
+        android:inputType="number"
         android:textColor="#fff"
         android:textSize="20dp" />
 

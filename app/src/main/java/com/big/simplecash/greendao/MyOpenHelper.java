@@ -1,8 +1,9 @@
 package com.big.simplecash.greendao;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
-import org.greenrobot.greendao.database.Database;
+
 
 /**
  * Created by big on 2019/6/13.
@@ -14,7 +15,29 @@ public class MyOpenHelper extends DaoMaster.DevOpenHelper {
     }
 
     @Override
-    public void onUpgrade(Database db, int oldVersion, int newVersion) {
-        super.onUpgrade(db, oldVersion, newVersion);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion) {
+            switch (newVersion) {
+                case 2:
+                    String new_column = "alter table " + "\"ORDER\"" + " add " + "discount" + " float";
+                    db.execSQL(new_column);
+                    break;
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//        clear(db);
+//        onCreate(db);
+    }
+
+    private void clear(SQLiteDatabase db) {
+        String sql = "DROP TABLE " + "IF EXISTS " + "\"MATERIAL_INFO\"";
+        db.execSQL(sql);
+        sql = "DROP TABLE " + "IF EXISTS " + "\"ORDER\"";
+        db.execSQL(sql);
     }
 }

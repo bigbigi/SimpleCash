@@ -24,6 +24,7 @@ public class Order {
     public float cost;
     public float transIn;
     public float transOut;
+    public float discount;
 
     public String outPut() {
         StringBuilder sb = new StringBuilder();
@@ -34,7 +35,8 @@ public class Order {
             .append(cost).append("#^")
             .append(transIn).append("#^")
             .append(transOut).append("#^")
-            .append(modifyTime).append("#^");
+            .append(modifyTime).append("#^")
+            .append(discount).append("#^");
         return sb.toString();
     }
 
@@ -50,16 +52,17 @@ public class Order {
             order.transIn = Float.parseFloat(fields[5]);
             order.transOut = Float.parseFloat(fields[6]);
             order.modifyTime = Long.parseLong(fields[7]);
+            order.discount = Long.parseLong(fields[8]);
         } catch (Exception e) {
             return null;
         }
         return order;
     }
 
-    @Generated(hash = 2064887723)
+    @Generated(hash = 1903335733)
     public Order(Long id, long createDate, long modifyTime, String content,
             float rate, float totalPurchase, float cost, float transIn,
-            float transOut) {
+            float transOut, float discount) {
         this.id = id;
         this.createDate = createDate;
         this.modifyTime = modifyTime;
@@ -69,6 +72,7 @@ public class Order {
         this.cost = cost;
         this.transIn = transIn;
         this.transOut = transOut;
+        this.discount = discount;
     }
 
     @Generated(hash = 1105174599)
@@ -177,6 +181,14 @@ public class Order {
 
     public void setModifyTime(long modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public float getDiscount() {
+        return this.discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
     }
 
 }

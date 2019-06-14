@@ -37,7 +37,7 @@ public class SaleActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost, mTransIn, mTransOut;
+    private TextView mRate, mCost, mTransIn, mTransOut,mDiscount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class SaleActivity extends BaseActivity implements
         mSum = findViewById(R.id.sum_content);
         mTransIn = findViewById(R.id.trans_in_content);
         mTransOut = findViewById(R.id.trans_out_content);
+        mDiscount=findViewById(R.id.discount_content);
         mRecyclerView = findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
@@ -67,8 +68,9 @@ public class SaleActivity extends BaseActivity implements
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
         mSum.setText(mOrder.totalPurchase + "");
-        mTransIn.setText(mOrder.transIn + "");
-        mTransOut.setText(mOrder.transOut + "");
+        mTransIn.setText(Utils.getText(mOrder.transIn));
+        mTransOut.setText(Utils.getText(mOrder.transOut));
+        mDiscount.setText(Utils.getText(mOrder.discount));
         mAdapter.notifyDataSetChanged();
     }
 
@@ -112,16 +114,9 @@ public class SaleActivity extends BaseActivity implements
             mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
             mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
 
-            if (TextUtils.isEmpty(mTransIn.getText())) {
-                mOrder.transIn = 0;
-            } else {
-                mOrder.transIn = Float.parseFloat(String.valueOf(mTransIn.getText()));
-            }
-            if (TextUtils.isEmpty(mTransOut.getText())) {
-                mOrder.transOut = 0;
-            } else {
-                mOrder.transOut = Float.parseFloat(String.valueOf(mTransOut.getText()));
-            }
+            mOrder.transIn = Utils.getTextFloat(mTransIn);
+            mOrder.transOut = Utils.getTextFloat(mTransOut);
+            mOrder.discount=Utils.getTextFloat(mDiscount);
             GreenDaoUtils.insertOrder(mOrder);
             return true;
         }

@@ -39,7 +39,8 @@ public class SettlementActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale;
+    private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale, mDiscount;
+    ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class SettlementActivity extends BaseActivity implements
         mSum = findViewById(R.id.sum_content);
         mTransIn = findViewById(R.id.trans_in_content);
         mTransOut = findViewById(R.id.trans_out_content);
+        mDiscount = findViewById(R.id.discount_content);
         mProfit = findViewById(R.id.profit_content);
         mTotalSale = findViewById(R.id.total_sale_content);
 
@@ -66,8 +68,9 @@ public class SettlementActivity extends BaseActivity implements
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
         mSum.setText(mOrder.totalPurchase + "");
-        mTransIn.setText(mOrder.transIn + "");
-        mTransOut.setText(mOrder.transOut + "");
+        mTransIn.setText(Utils.getText(mOrder.transIn));
+        mTransOut.setText(Utils.getText(mOrder.transOut));
+        mDiscount.setText(Utils.getText(mOrder.discount));
         mAdapter.notifyDataSetChanged();
         mTransIn.addTextChangedListener(new SimpleTextWatch() {
             @Override
@@ -126,6 +129,7 @@ public class SettlementActivity extends BaseActivity implements
 
             mOrder.transIn = Utils.getTextFloat(mTransIn);
             mOrder.transOut = Utils.getTextFloat(mTransOut);
+            mOrder.discount = Utils.getTextFloat(mDiscount);
 
             GreenDaoUtils.insertSettle(mOrder);
             return true;
@@ -138,7 +142,7 @@ public class SettlementActivity extends BaseActivity implements
             if (info.price == 0) continue;
             sum += info.salePrice * info.number;
         }
-        float profit = sum + mOrder.transIn - mOrder.transOut - mOrder.cost - mOrder.rate * mOrder.totalPurchase;
+        float profit = sum + mOrder.transIn +mOrder.discount*mOrder.rate- mOrder.transOut - mOrder.cost - mOrder.rate * mOrder.totalPurchase;
         mTotalSale.setText(String.format("%.1f", sum));
         mProfit.setText(String.format("%.1f", profit));
     }
