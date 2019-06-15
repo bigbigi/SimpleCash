@@ -8,10 +8,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.big.simplecash.greendao.GreenDaoUtils;
+import com.big.simplecash.greendao.MaterialInfo;
 import com.big.simplecash.greendao.Order;
+import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.util.Base64;
 import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -38,7 +44,7 @@ public class InputDialog extends Dialog implements View.OnClickListener {
     @Override
     public void show() {
         super.show();
-        if(mInput!=null){
+        if (mInput != null) {
             mInput.setText("");
         }
     }
@@ -52,11 +58,24 @@ public class InputDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         dismiss();
-        if(view.getId()==R.id.confirm){
+        if (view.getId() == R.id.confirm) {
             if (!TextUtils.isEmpty(mInput.getText())) {
-                Order order = Order.intPut(Utils.unCompress(String.valueOf(mInput.getText())));
+                final Order order = Order.intPut(Utils.unCompress(String.valueOf(mInput.getText())));
                 if (mCallBack != null) {
                     mCallBack.onCallBack(order);
+                    if (order != null) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                List<SaleInfo> list = new ArrayList<>();
+                                order.parseList(list);
+                                for (SaleInfo info : list) {
+                                    GreenDaoUtils.insertMaterialInfo(info);
+                                }
+                            }
+                        }.start();
+                    }
+
                 }
             }
         }
