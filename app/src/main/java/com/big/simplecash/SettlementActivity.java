@@ -66,7 +66,7 @@ public class SettlementActivity extends BaseActivity implements
         mOrder.parseList(mList);
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
-        mSum.setText(mOrder.totalPurchase + "");
+        mSum.setText(String.format("%.1f",mOrder.totalPurchase));
         mTransIn.setText(Utils.getText(mOrder.transIn));
         mTransOut.setText(Utils.getText(mOrder.transOut));
         mDiscount.setText(Utils.getText(mOrder.discount));
@@ -122,7 +122,6 @@ public class SettlementActivity extends BaseActivity implements
                 mOrder.createDate = System.currentTimeMillis();
             }
             mOrder.createContent(mList);
-            mOrder.totalPurchase = Float.parseFloat(String.valueOf(mSum.getText()));
             mOrder.rate = Float.parseFloat(String.valueOf(mRate.getText()));
             mOrder.cost = Float.parseFloat(String.valueOf(mCost.getText()));
 

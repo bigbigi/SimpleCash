@@ -67,7 +67,7 @@ public class SaleActivity extends BaseActivity implements
         mOrder.parseList(mList);
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
-        mSum.setText(mOrder.totalPurchase + "");
+        mSum.setText(String.format("%.1f",mOrder.totalPurchase));
         mTransIn.setText(Utils.getText(mOrder.transIn));
         mTransOut.setText(Utils.getText(mOrder.transOut));
         mDiscount.setText(Utils.getText(mOrder.discount));
@@ -85,6 +85,8 @@ public class SaleActivity extends BaseActivity implements
                 Intent intent = new Intent(this, SettlementActivity.class);
                 Application.mSettlementOrder = mOrder;
                 startActivity(intent);
+                GreenDaoUtils.insertSettle(mOrder);
+                GreenDaoUtils.deleteOrder(mOrder);
                 finish();
             }
         } else {
@@ -129,7 +131,7 @@ public class SaleActivity extends BaseActivity implements
             if (info.price == 0) continue;
             sum += info.realPrice * info.number;
         }
-        mSum.setText(sum + "");
+        mSum.setText(String.format("%.1f",sum));
     }
 
     @Override

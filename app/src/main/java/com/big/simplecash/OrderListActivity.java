@@ -25,7 +25,6 @@ import java.util.Locale;
  */
 
 public class OrderListActivity extends BaseActivity implements View.OnClickListener {
-    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YY/MM/dd-HH:mm", Locale.CHINA);
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
 
@@ -38,7 +37,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setData(GreenDaoUtils.getOrder());
+
     }
 
     InputDialog mInputDialog;
@@ -65,6 +64,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         if (mAdapter != null) {
+            mAdapter.setData(GreenDaoUtils.getOrder());
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -93,9 +93,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
-            holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
-            holder.modify.setText(mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText("HK$ " + info.totalPurchase);
+            holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
+            holder.total.setText(String.format("HK$ %.1f",info.totalPurchase));
         }
 
         @Override

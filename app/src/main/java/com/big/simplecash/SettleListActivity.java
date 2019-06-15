@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 
 public class SettleListActivity extends BaseActivity implements View.OnClickListener {
-    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("YY/MM/dd-HH:mm", Locale.CHINA);
+
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
 
@@ -93,9 +93,9 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
-            holder.name.setText(mSimpleDateFormat.format(new Date(info.createDate)));
-            holder.modify.setText(mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText("HK$ " + info.totalPurchase);
+            holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
+            holder.total.setText(String.format("HK$ %.1f",info.totalPurchase));
         }
 
         @Override
