@@ -104,7 +104,7 @@ public class GreenDaoUtils {
         List<Order> list = new ArrayList<>();
         try {
             QueryBuilder<Order> ql = getOrderDao().queryBuilder();
-            list = ql.orderDesc(OrderDao.Properties.CreateDate).list();
+            list = ql.orderDesc(OrderDao.Properties.CreateDate).orderDesc(OrderDao.Properties.ModifyTime).list();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,7 +170,7 @@ public class GreenDaoUtils {
         List<Order> list = new ArrayList<>();
         try {
             QueryBuilder<Order> ql = getSettleDao().queryBuilder();
-            list = ql.orderDesc(OrderDao.Properties.CreateDate).list();
+            list = ql.orderDesc(OrderDao.Properties.CreateDate).orderDesc(OrderDao.Properties.ModifyTime).list();
         } catch (Exception e) {
             e.printStackTrace();
         }
