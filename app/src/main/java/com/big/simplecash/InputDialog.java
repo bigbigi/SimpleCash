@@ -30,7 +30,7 @@ public class InputDialog extends Dialog implements View.OnClickListener {
         View contentView = View.inflate(getContext(), R.layout.dialog_input, null);
         setContentView(contentView, new WindowManager.LayoutParams(-1, -1));
         getWindow().setLayout(-1, -1);
-        mInput = contentView.findViewById(R.id.input_content);
+        mInput = (TextView) contentView.findViewById(R.id.input_content);
         findViewById(R.id.confirm).setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
     }

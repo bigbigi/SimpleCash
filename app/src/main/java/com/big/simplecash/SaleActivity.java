@@ -46,13 +46,13 @@ public class SaleActivity extends BaseActivity implements
         findViewById(R.id.add).setOnClickListener(this);
         findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.settle).setOnClickListener(this);
-        mRate = findViewById(R.id.rate_content);
-        mCost = findViewById(R.id.cost_content);
-        mSum = findViewById(R.id.sum_content);
-        mTransIn = findViewById(R.id.trans_in_content);
-        mTransOut = findViewById(R.id.trans_out_content);
-        mDiscount=findViewById(R.id.discount_content);
-        mRecyclerView = findViewById(R.id.recycler);
+        mRate = (TextView) findViewById(R.id.rate_content);
+        mCost = (TextView) findViewById(R.id.cost_content);
+        mSum = (TextView) findViewById(R.id.sum_content);
+        mTransIn = (TextView) findViewById(R.id.trans_in_content);
+        mTransOut = (TextView) findViewById(R.id.trans_out_content);
+        mDiscount= (TextView) findViewById(R.id.discount_content);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
@@ -85,6 +85,7 @@ public class SaleActivity extends BaseActivity implements
                 Intent intent = new Intent(this, SettlementActivity.class);
                 Application.mSettlementOrder = mOrder;
                 startActivity(intent);
+                finish();
             }
         } else {
             Intent intent = new Intent(this, MaterialActivity.class);
@@ -196,14 +197,14 @@ public class SaleActivity extends BaseActivity implements
 
             public MyHolder(View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.item_name);
-                size = itemView.findViewById(R.id.item_size);
-                price = itemView.findViewById(R.id.item_price);
-                provide = itemView.findViewById(R.id.item_provider);
-                del = itemView.findViewById(R.id.item_del);
-                realPrice = itemView.findViewById(R.id.item_real_price);
-                num = itemView.findViewById(R.id.item_num);
-                total = itemView.findViewById(R.id.item_total);
+                name = (TextView) itemView.findViewById(R.id.item_name);
+                size = (TextView) itemView.findViewById(R.id.item_size);
+                price = (TextView) itemView.findViewById(R.id.item_price);
+                provide = (TextView) itemView.findViewById(R.id.item_provider);
+                del = (TextView) itemView.findViewById(R.id.item_del);
+                realPrice = (TextView) itemView.findViewById(R.id.item_real_price);
+                num = (TextView) itemView.findViewById(R.id.item_num);
+                total = (TextView) itemView.findViewById(R.id.item_total);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {

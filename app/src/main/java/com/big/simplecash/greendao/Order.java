@@ -52,7 +52,7 @@ public class Order {
             order.transIn = Float.parseFloat(fields[5]);
             order.transOut = Float.parseFloat(fields[6]);
             order.modifyTime = Long.parseLong(fields[7]);
-            order.discount = Long.parseLong(fields[8]);
+            order.discount = Float.parseFloat(fields[8]);
         } catch (Exception e) {
             return null;
         }

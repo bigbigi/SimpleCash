@@ -23,10 +23,10 @@ public class AddActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         findViewById(R.id.confirm).setOnClickListener(this);
-        mName = findViewById(R.id.name);
-        mSize = findViewById(R.id.size);
-        mPrice = findViewById(R.id.price);
-        mProvider = findViewById(R.id.provider);
+        mName = (EditText) findViewById(R.id.name);
+        mSize = (EditText) findViewById(R.id.size);
+        mPrice = (EditText) findViewById(R.id.price);
+        mProvider = (EditText) findViewById(R.id.provider);
     }
 
     @Override

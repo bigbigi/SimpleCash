@@ -39,8 +39,8 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material);
         findViewById(R.id.add).setOnClickListener(this);
-        mSearchEdit = findViewById(R.id.search_name);
-        mRecyclerView = findViewById(R.id.recycler);
+        mSearchEdit = (EditText) findViewById(R.id.search_name);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -139,11 +139,11 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
 
             public MyHolder(View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.item_name);
-                size = itemView.findViewById(R.id.item_size);
-                price = itemView.findViewById(R.id.item_price);
-                provide = itemView.findViewById(R.id.item_provider);
-                del = itemView.findViewById(R.id.item_del);
+                name = (TextView) itemView.findViewById(R.id.item_name);
+                size = (TextView) itemView.findViewById(R.id.item_size);
+                price = (TextView) itemView.findViewById(R.id.item_price);
+                provide = (TextView) itemView.findViewById(R.id.item_provider);
+                del = (TextView) itemView.findViewById(R.id.item_del);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {

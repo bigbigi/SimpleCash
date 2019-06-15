@@ -40,7 +40,6 @@ public class SettlementActivity extends BaseActivity implements
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
     private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale, mDiscount;
-    ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,16 +47,16 @@ public class SettlementActivity extends BaseActivity implements
         setContentView(R.layout.activity_settlement);
         findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.output).setOnClickListener(this);
-        mRate = findViewById(R.id.rate_content);
-        mCost = findViewById(R.id.cost_content);
-        mSum = findViewById(R.id.sum_content);
-        mTransIn = findViewById(R.id.trans_in_content);
-        mTransOut = findViewById(R.id.trans_out_content);
-        mDiscount = findViewById(R.id.discount_content);
-        mProfit = findViewById(R.id.profit_content);
-        mTotalSale = findViewById(R.id.total_sale_content);
+        mRate = (TextView) findViewById(R.id.rate_content);
+        mCost = (TextView) findViewById(R.id.cost_content);
+        mSum = (TextView) findViewById(R.id.sum_content);
+        mTransIn = (TextView) findViewById(R.id.trans_in_content);
+        mTransOut = (TextView) findViewById(R.id.trans_out_content);
+        mDiscount = (TextView) findViewById(R.id.discount_content);
+        mProfit = (TextView) findViewById(R.id.profit_content);
+        mTotalSale = (TextView) findViewById(R.id.total_sale_content);
 
-        mRecyclerView = findViewById(R.id.recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
@@ -194,13 +193,13 @@ public class SettlementActivity extends BaseActivity implements
 
             public MyHolder(View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.item_name);
-                size = itemView.findViewById(R.id.item_size);
-                salePrice = itemView.findViewById(R.id.item_sale_price);
-                provide = itemView.findViewById(R.id.item_provider);
-                realPrice = itemView.findViewById(R.id.item_real_price);
-                num = itemView.findViewById(R.id.item_num);
-                profit = itemView.findViewById(R.id.item_profit);
+                name = (TextView) itemView.findViewById(R.id.item_name);
+                size = (TextView) itemView.findViewById(R.id.item_size);
+                salePrice = (TextView) itemView.findViewById(R.id.item_sale_price);
+                provide = (TextView) itemView.findViewById(R.id.item_provider);
+                realPrice = (TextView) itemView.findViewById(R.id.item_real_price);
+                num = (TextView) itemView.findViewById(R.id.item_num);
+                profit = (TextView) itemView.findViewById(R.id.item_profit);
 
 
                 if (salePrice instanceof EditText) {

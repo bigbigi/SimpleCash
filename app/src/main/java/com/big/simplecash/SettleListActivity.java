@@ -34,7 +34,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settlelist);
         findViewById(R.id.add).setOnClickListener(this);
-        mRecyclerView = findViewById(R.id.recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -113,10 +113,10 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
 
             public MyHolder(View itemView) {
                 super(itemView);
-                name = itemView.findViewById(R.id.item_name);
-                total = itemView.findViewById(R.id.item_total);
-                del = itemView.findViewById(R.id.item_del);
-                modify = itemView.findViewById(R.id.item_modify);
+                name = (TextView) itemView.findViewById(R.id.item_name);
+                total = (TextView) itemView.findViewById(R.id.item_total);
+                del = (TextView) itemView.findViewById(R.id.item_del);
+                modify = (TextView) itemView.findViewById(R.id.item_modify);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {

@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:background="#fff">
 
+    <View
+        android:id="@+id/middle"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:layout_centerHorizontal="true"
+        android:focusableInTouchMode="true"/>
+
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -19,7 +26,6 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:focusableInTouchMode="true"
             android:gravity="center"
             android:text="保存"
             android:textColor="#fff"
@@ -54,12 +60,6 @@
         android:layout_above="@+id/rate"
         android:layout_below="@id/title" />
 
-
-    <View
-        android:id="@+id/middle"
-        android:layout_width="1px"
-        android:layout_height="1px"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/sum"
