@@ -35,6 +35,14 @@ public class InputDialog extends Dialog implements View.OnClickListener {
         findViewById(R.id.cancel).setOnClickListener(this);
     }
 
+    @Override
+    public void show() {
+        super.show();
+        if(mInput!=null){
+            mInput.setText("");
+        }
+    }
+
     CallBack<Order> mCallBack;
 
     public void setCallback(CallBack<Order> callback) {

@@ -153,21 +153,22 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                         return true;
                     }
                 });
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (del.getVisibility() == View.VISIBLE) {
-                            if (del != null) {
-                                del.setVisibility(View.GONE);
-                            }
-                        } else if ("sale".equals(getIntent().getStringExtra("from"))) {
-                            Application.mTempInfo = mList.get(getAdapterPosition());
-                            setResult(100);
-                            finish();
-                        }
-                    }
-                });
+
                 if (del != null) {
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (del.getVisibility() == View.VISIBLE) {
+                                if (del != null) {
+                                    del.setVisibility(View.GONE);
+                                }
+                            } else if ("sale".equals(getIntent().getStringExtra("from"))) {
+                                Application.mTempInfo = mList.get(getAdapterPosition());
+                                setResult(100);
+                                finish();
+                            }
+                        }
+                    });
                     del.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

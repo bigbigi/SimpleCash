@@ -11,7 +11,6 @@
     <TextView
         android:id="@+id/item_name"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="2"
         android:text="名称" />
 
@@ -23,7 +22,6 @@
     <TextView
         android:id="@+id/item_size"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="规格" />
 
@@ -36,7 +34,6 @@
     <TextView
         android:id="@+id/item_real_price"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000" />
 
@@ -49,7 +46,6 @@
     <EditText
         android:id="@+id/item_sale_price"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000"
         android:digits="0123456789."
@@ -63,7 +59,6 @@
     <TextView
         android:id="@+id/item_provider"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="店铺" />
 
@@ -75,7 +70,6 @@
     <TextView
         android:id="@+id/item_num"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#00000000"
         android:digits="0123456789."
@@ -89,14 +83,12 @@
     <TextView
         android:id="@+id/item_profit"
         style="@style/itemTheme"
-        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="利润" />
 
     <TextView
         android:id="@+id/item_del"
         style="@style/itemTheme"
-        android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#ff0000"
         android:gravity="center"
