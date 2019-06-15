@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
             }
             holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText(String.format("HK$ %.1f",info.totalPurchase));
+            holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
         }
 
         @Override
@@ -135,7 +136,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
                             }
                         } else {
                             Intent intent = new Intent(SettleListActivity.this, SettlementActivity.class);
-                            Application.mSettlementOrder = mList.get(getAdapterPosition());
+                            intent.putExtra("data", mList.get(getAdapterPosition()));
                             startActivity(intent);
                         }
                     }

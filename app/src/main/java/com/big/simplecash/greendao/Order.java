@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.greenrobot.greendao.annotation.Generated;
@@ -13,7 +14,8 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by big on 2019/6/11.
  */
 @Entity
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 536871008;
     @Id(autoincrement = true)
     public Long id;
     public long createDate;
@@ -29,14 +31,14 @@ public class Order {
     public String outPut() {
         StringBuilder sb = new StringBuilder();
         sb.append(createDate).append("#^")
-            .append(content).append("#^")
-            .append(rate).append("#^")
-            .append(totalPurchase).append("#^")
-            .append(cost).append("#^")
-            .append(transIn).append("#^")
-            .append(transOut).append("#^")
-            .append(modifyTime).append("#^")
-            .append(discount).append("#^");
+                .append(content).append("#^")
+                .append(rate).append("#^")
+                .append(totalPurchase).append("#^")
+                .append(cost).append("#^")
+                .append(transIn).append("#^")
+                .append(transOut).append("#^")
+                .append(modifyTime).append("#^")
+                .append(discount).append("#^");
         return sb.toString();
     }
 
@@ -61,8 +63,8 @@ public class Order {
 
     @Generated(hash = 1903335733)
     public Order(Long id, long createDate, long modifyTime, String content,
-            float rate, float totalPurchase, float cost, float transIn,
-            float transOut, float discount) {
+                 float rate, float totalPurchase, float cost, float transIn,
+                 float transOut, float discount) {
         this.id = id;
         this.createDate = createDate;
         this.modifyTime = modifyTime;
@@ -84,13 +86,13 @@ public class Order {
         for (SaleInfo info : list) {
             if (TextUtils.isEmpty(info.name)) continue;
             sb.append(info.name).append("|")
-                .append(info.size).append("|")
-                .append(info.price).append("|")
-                .append(info.provider).append("|")
-                .append(info.realPrice).append("|")
-                .append(info.salePrice).append("|")
-                .append(info.number).append("|")
-                .append("&&");
+                    .append(info.size).append("|")
+                    .append(info.price).append("|")
+                    .append(info.provider).append("|")
+                    .append(info.realPrice).append("|")
+                    .append(info.salePrice).append("|")
+                    .append(info.number).append("|")
+                    .append("&&");
         }
         content = sb.toString();
     }

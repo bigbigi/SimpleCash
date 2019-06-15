@@ -31,13 +31,13 @@ import java.util.List;
  */
 
 public class SaleActivity extends BaseActivity implements
-    View.OnClickListener {
+        View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost, mTransIn, mTransOut,mDiscount;
+    private TextView mRate, mCost, mTransIn, mTransOut, mDiscount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,14 +51,14 @@ public class SaleActivity extends BaseActivity implements
         mSum = (TextView) findViewById(R.id.sum_content);
         mTransIn = (TextView) findViewById(R.id.trans_in_content);
         mTransOut = (TextView) findViewById(R.id.trans_out_content);
-        mDiscount= (TextView) findViewById(R.id.discount_content);
+        mDiscount = (TextView) findViewById(R.id.discount_content);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
-        if ("list".equals(getIntent().getStringExtra("from"))) {
-            mOrder = Application.mTempOrder;
+        if (getIntent().hasExtra("data")) {
+            mOrder = (Order) getIntent().getSerializableExtra("data");
             readOrder();
         }
     }
@@ -67,7 +67,7 @@ public class SaleActivity extends BaseActivity implements
         mOrder.parseList(mList);
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
-        mSum.setText(String.format("%.1f",mOrder.totalPurchase));
+        mSum.setText(String.format("%.1f", mOrder.totalPurchase));
         mTransIn.setText(Utils.getText(mOrder.transIn));
         mTransOut.setText(Utils.getText(mOrder.transOut));
         mDiscount.setText(Utils.getText(mOrder.discount));
@@ -83,7 +83,7 @@ public class SaleActivity extends BaseActivity implements
         } else if (view.getId() == R.id.settle) {
             if (save()) {
                 Intent intent = new Intent(this, SettlementActivity.class);
-                Application.mSettlementOrder = mOrder;
+                intent.putExtra("data", mOrder);
                 startActivity(intent);
                 GreenDaoUtils.insertSettle(mOrder);
                 GreenDaoUtils.deleteOrder(mOrder);
@@ -119,7 +119,7 @@ public class SaleActivity extends BaseActivity implements
 
             mOrder.transIn = Utils.getTextFloat(mTransIn);
             mOrder.transOut = Utils.getTextFloat(mTransOut);
-            mOrder.discount=Utils.getTextFloat(mDiscount);
+            mOrder.discount = Utils.getTextFloat(mDiscount);
             GreenDaoUtils.insertOrder(mOrder);
             return true;
         }
@@ -131,7 +131,7 @@ public class SaleActivity extends BaseActivity implements
             if (info.price == 0) continue;
             sum += info.realPrice * info.number;
         }
-        mSum.setText(String.format("%.1f",sum));
+        mSum.setText(String.format("%.1f", sum));
     }
 
     @Override

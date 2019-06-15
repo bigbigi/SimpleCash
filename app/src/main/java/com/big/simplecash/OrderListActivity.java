@@ -95,7 +95,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             }
             holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText(String.format("HK$ %.1f",info.totalPurchase));
+            holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
         }
 
         @Override
@@ -135,8 +135,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                             }
                         } else {
                             Intent intent = new Intent(OrderListActivity.this, SaleActivity.class);
-                            intent.putExtra("from", "list");
-                            Application.mTempOrder = mList.get(getAdapterPosition());
+                            intent.putExtra("data", mList.get(getAdapterPosition()));
                             startActivity(intent);
                         }
                     }

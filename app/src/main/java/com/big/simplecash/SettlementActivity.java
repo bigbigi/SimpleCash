@@ -62,7 +62,7 @@ public class SettlementActivity extends BaseActivity implements
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        mOrder = Application.mSettlementOrder;
+        mOrder = (Order) getIntent().getSerializableExtra("data");
         mOrder.parseList(mList);
         mRate.setText(mOrder.rate + "");
         mCost.setText(mOrder.cost + "");
