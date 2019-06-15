@@ -63,7 +63,7 @@
         android:layout_alignParentBottom="true"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="营收：￥ "
+        android:text="售价:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -75,6 +75,7 @@
         android:layout_alignTop="@id/total_sale"
         android:layout_toRightOf="@id/total_sale"
         android:background="#FFA500"
+        android:maxLines="1"
         android:gravity="left|center_vertical"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -88,7 +89,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="利润：￥ "
+        android:text="利润:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -112,7 +113,7 @@
         android:layout_marginBottom="1px"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="采购价：HK$ "
+        android:text="采购:HK$ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -123,7 +124,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/sum"
         android:layout_toRightOf="@id/sum"
+        android:layout_alignRight="@id/middle"
         android:background="#FFA500"
+        android:maxLines="1"
         android:gravity="left|center_vertical"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -137,7 +140,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="优惠：HK$ "
+        android:text="优惠:HK$ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -162,7 +165,7 @@
         android:layout_marginBottom="1px"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="运费收入：￥ "
+        android:text="运费收入:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -191,7 +194,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="运费支出：￥ "
+        android:text="运费支出:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -218,7 +221,7 @@
         android:background="#FFA500"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:text="汇率："
+        android:text="汇率:"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -247,7 +250,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#FFA500"
         android:gravity="left|center_vertical"
-        android:text="其他成本：￥"
+        android:text="其他成本:￥"
         android:textColor="#fff"
         android:textSize="20dp" />
 

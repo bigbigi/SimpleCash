@@ -68,7 +68,7 @@
         android:layout_alignParentBottom="true"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
-        android:text="采购价：HK$ "
+        android:text="采购:HK$ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -79,6 +79,7 @@
         android:layout_alignRight="@id/middle"
         android:layout_alignTop="@id/sum"
         android:layout_toRightOf="@id/sum"
+        android:maxLines="1"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
         android:textColor="#fff"
@@ -93,7 +94,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
-        android:text="优惠：HK$ "
+        android:text="优惠:HK$ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -119,7 +120,7 @@
         android:layout_marginBottom="1px"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
-        android:text="运费收入：￥ "
+        android:text="运费收入:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -148,7 +149,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
-        android:text="运费支出：￥ "
+        android:text="运费支出:￥ "
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -175,7 +176,7 @@
         android:background="#ff7f50"
         android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:text="汇率："
+        android:text="汇率:"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -204,7 +205,7 @@
         android:layout_toRightOf="@id/middle"
         android:background="#ff7f50"
         android:gravity="left|center_vertical"
-        android:text="其他成本：￥"
+        android:text="其他成本:￥"
         android:textColor="#fff"
         android:textSize="20dp" />
 
