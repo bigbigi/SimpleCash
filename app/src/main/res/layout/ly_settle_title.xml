@@ -65,7 +65,8 @@
         android:id="@+id/item_num"
         style="@style/itemTitle"
         android:layout_weight="1"
-        android:text="量" />
+        android:textSize="10dp"
+        android:text="数量" />
 
     <View
         android:layout_width="1px"

@@ -95,7 +95,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
             Order info = mList.get(position);
             if (position == mCurPos) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.itemFocus));
-            } else if (position % 2 == 0) {
+            }else if (position % 2 == 0) {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
@@ -177,14 +177,4 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-//    private void sum(Order order) {
-//        float sum = 0;
-//        for (SaleInfo info : mList) {
-//            if (info.price == 0) continue;
-//            sum += info.salePrice * info.number;
-//        }
-//        float profit = sum + mOrder.transIn + mOrder.discount * mOrder.rate - mOrder.transOut - mOrder.cost - mOrder.rate * mOrder.totalPurchase;
-//        mTotalSale.setText(String.format("%.1f", sum));
-//        mProfit.setText(String.format("%.1f", profit));
-//    }
 }

@@ -50,10 +50,25 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/provider"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_above="@id/sale"
+        android:layout_marginTop="1px"
+        android:background="#fff"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:text="店铺:"
+        android:textColor="#333"
+        android:textColorHint="#555"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@id/provider"
         android:layout_marginTop="1px"
         android:background="#fff"
         android:gravity="center"
@@ -88,6 +103,14 @@
         android:layout_height="50dp"
         android:layout_alignBottom="@id/name"
         android:layout_toRightOf="@id/name" />
+
+    <EditText
+        android:id="@+id/provider_content"
+        style="@style/edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/provider"
+        android:layout_toRightOf="@id/provider" />
 
 </RelativeLayout>
 

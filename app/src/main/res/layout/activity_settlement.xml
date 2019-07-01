@@ -49,7 +49,7 @@
 
     <include
         android:id="@+id/item_title"
-        layout="@layout/item_settle_title"
+        layout="@layout/ly_settle_title"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_below="@id/title" />

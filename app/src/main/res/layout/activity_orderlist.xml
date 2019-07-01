@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:gravity="center"
-        android:paddingLeft="10dp"
+        android:paddingLeft="20dp"
         android:paddingRight="10dp"
         android:text="编辑"
         android:textColor="#fff"
@@ -36,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="20dp"
         android:text="导入"
         android:textColor="#fff"
         android:textSize="16dp" />

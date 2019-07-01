@@ -168,7 +168,7 @@ public class SettlementActivity extends BaseActivity implements
     }
 
     private boolean save() {
-        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
+        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 0) {
             Toast.makeText(SettlementActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
             return false;
         } else {
@@ -261,7 +261,7 @@ public class SettlementActivity extends BaseActivity implements
                         notifyItemChanged(mCurPos);
                         mCurPos = getAdapterPosition();
                         notifyItemChanged(mCurPos);
-                        if (mIsEditMode && mCurPos > 0 && mCurPos < mList.size()) {
+                        if (mIsEditMode && mCurPos >= 0 && mCurPos < mList.size()) {
                             final SaleInfo info = mList.get(mCurPos);
                             showSingleDialog(salePrice, info.name + " 售价￥", info.salePrice + "", new CallBack<Float>() {
                                 @Override

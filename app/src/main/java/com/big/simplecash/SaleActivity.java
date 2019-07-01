@@ -31,7 +31,7 @@ import java.util.List;
  */
 
 public class SaleActivity extends BaseActivity implements
-    View.OnClickListener {
+        View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -86,8 +86,10 @@ public class SaleActivity extends BaseActivity implements
         if (view.getId() == R.id.save) {
             if (mIsEditMode && save()) {
                 Toast.makeText(this, "订单保存成功", Toast.LENGTH_LONG).show();
+                mIsEditMode = false;
+            } else {
+                mIsEditMode = true;
             }
-            mIsEditMode = !mIsEditMode;
             mSave.setText(mIsEditMode ? R.string.save : R.string.edit);
         } else if (view.getId() == R.id.settle) {
             if (save()) {
@@ -99,6 +101,10 @@ public class SaleActivity extends BaseActivity implements
                 finish();
             }
         } else if (view.getId() == R.id.settle) {
+            Intent intent = new Intent(this, MaterialActivity.class);
+            intent.putExtra("from", "sale");
+            startActivityForResult(intent, 101);
+        } else if (view.getId() == R.id.add) {
             Intent intent = new Intent(this, MaterialActivity.class);
             intent.putExtra("from", "sale");
             startActivityForResult(intent, 101);
@@ -124,7 +130,7 @@ public class SaleActivity extends BaseActivity implements
     private Order mOrder;
 
     private boolean save() {
-        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
+        if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 0) {
             Toast.makeText(SaleActivity.this, "汇率或订单为空", Toast.LENGTH_LONG).show();
             return false;
         } else if (TextUtils.isEmpty(mCost.getText())) {
@@ -135,7 +141,7 @@ public class SaleActivity extends BaseActivity implements
                 mOrder = new Order();
                 mOrder.createDate = System.currentTimeMillis();
                 mOrder.name = Application.mNameDateFormat.format(new Date(mOrder.createDate))
-                    + "-" + SharePrefer.getDateNum(mOrder.createDate);
+                        + "-" + SharePrefer.getDateNum(mOrder.createDate);
                 mOrder.modifyTime = mOrder.createDate;
             }
             mOrder.createContent(mList);
@@ -256,7 +262,7 @@ public class SaleActivity extends BaseActivity implements
                                     del.setVisibility(View.GONE);
                                 }
                             }
-                            if (mIsEditMode && mCurPos > 0 && mCurPos < mList.size()) {
+                            if (mIsEditMode && mCurPos >= 0 && mCurPos < mList.size()) {
                                 showSaleEditDialog(mList.get(mCurPos));
                             }
                         }
@@ -265,7 +271,7 @@ public class SaleActivity extends BaseActivity implements
                         @Override
                         public void onClick(View view) {
                             int position = getAdapterPosition();
-                            if (position > 0 && position < mList.size()) {
+                            if (position >= 0 && position < mList.size()) {
                                 del.setVisibility(View.GONE);
                                 mList.remove(position);
                                 sum();

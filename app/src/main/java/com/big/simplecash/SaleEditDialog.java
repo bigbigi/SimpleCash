@@ -22,7 +22,7 @@ public class SaleEditDialog extends Dialog implements View.OnClickListener {
         init();
     }
 
-    private TextView mPrice, mNum, mName;
+    private TextView mPrice, mNum, mName, mProvider;
 
     private void init() {
         View contentView = View.inflate(getContext(), R.layout.dialog_order_edit, null);
@@ -31,6 +31,7 @@ public class SaleEditDialog extends Dialog implements View.OnClickListener {
         mName = (TextView) contentView.findViewById(R.id.name_content);
         mPrice = (TextView) contentView.findViewById(R.id.price_content);
         mNum = (TextView) contentView.findViewById(R.id.num_content);
+        mProvider = (TextView) contentView.findViewById(R.id.provider_content);
         findViewById(R.id.confirm).setOnClickListener(this);
     }
 
@@ -46,6 +47,7 @@ public class SaleEditDialog extends Dialog implements View.OnClickListener {
         mName.setText(String.valueOf(info.name));
         mPrice.setText(String.valueOf(info.realPrice));
         mNum.setText(String.valueOf(info.number));
+        mProvider.setText(String.valueOf(info.provider));
         mSaleInfo = info;
     }
 
@@ -54,6 +56,7 @@ public class SaleEditDialog extends Dialog implements View.OnClickListener {
         dismiss();
         if (view.getId() == R.id.confirm) {
             mSaleInfo.name = String.valueOf(mName.getText());
+            mSaleInfo.provider = String.valueOf(mProvider.getText());
             mSaleInfo.realPrice = Utils.getTextFloat(mPrice);
             mSaleInfo.number = Utils.getTextInt(mNum);
             if (mCallBack != null) {
