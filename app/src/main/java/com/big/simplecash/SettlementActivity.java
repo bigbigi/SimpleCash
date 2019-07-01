@@ -282,7 +282,7 @@ public class SettlementActivity extends BaseActivity implements
 
     private String doExcel() {
         ArrayList<ArrayList<String>> recordList = new ArrayList<>();
-        for (int i = 1; i < mList.size(); i++) {
+        for (int i = 0; i < mList.size(); i++) {
             SaleInfo info = mList.get(i);
             ArrayList<String> beanList = new ArrayList<String>();
             beanList.add(info.name);
@@ -297,39 +297,49 @@ public class SettlementActivity extends BaseActivity implements
             recordList.add(beanList);
         }
         recordList.add(new ArrayList<String>());
+        //add rate
+        ArrayList<String> rate = new ArrayList<>();
+        rate.add("汇率：");
+        rate.add(mOrder.rate + "");
+        recordList.add(rate);
+
+        ArrayList<String> purchase = new ArrayList<>();
+        purchase.add("采购支出$：");
+        purchase.add(mOrder.totalPurchase + "");
+        recordList.add(purchase);
+
+        //discount and
+        ArrayList<String> discount = new ArrayList<>();
+        discount.add("优惠$：");
+        discount.add(mOrder.discount + "");
+        recordList.add(discount);
+
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("优惠后采购$：");
+        temp.add((mOrder.totalPurchase - mOrder.discount) + "");
+
+        temp.add("人民币：");
+        temp.add(String.format("%.1f", (mOrder.totalPurchase - mOrder.discount) * mOrder.rate));
+        recordList.add(temp);
+
         //total purchase and sale
         ArrayList<String> sale = new ArrayList<>();
         sale.add("货款收入￥：");
         sale.add(String.valueOf(mTotalSale.getText()));
-
-        sale.add("");
-        sale.add("采购支出$：");
-        sale.add(mOrder.totalPurchase + "");
+        sale.add("其他成本￥：");
+        sale.add(mOrder.cost + "");
         recordList.add(sale);
+
 
         //add transOut and transIn
         ArrayList<String> transOut = new ArrayList<>();
         transOut.add("运费收入￥：");
         transOut.add(mOrder.transIn + "");
 
-        transOut.add("");
         transOut.add("运费支出￥：");
         transOut.add(mOrder.transOut + "");
         recordList.add(transOut);
-        //discount and cost
-        ArrayList<String> discount = new ArrayList<>();
-        discount.add("优惠$：");
-        discount.add(mOrder.discount + "");
-        discount.add("");
 
-        discount.add("其他成本￥：");
-        discount.add(mOrder.cost + "");
-        recordList.add(discount);
-        //add rate
-        ArrayList<String> rate = new ArrayList<>();
-        rate.add("汇率：");
-        rate.add(mOrder.rate + "");
-        recordList.add(rate);
 
         //add profit
         ArrayList<String> profit = new ArrayList<>();
