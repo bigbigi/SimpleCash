@@ -20,10 +20,12 @@ import com.big.simplecash.greendao.MaterialInfo;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
+import com.big.simplecash.util.SharePrefer;
 import com.big.simplecash.util.SimpleTextWatch;
 import com.big.simplecash.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ import java.util.List;
  */
 
 public class SaleActivity extends BaseActivity implements
-        View.OnClickListener {
+    View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -110,6 +112,8 @@ public class SaleActivity extends BaseActivity implements
             if (mOrder == null) {
                 mOrder = new Order();
                 mOrder.createDate = System.currentTimeMillis();
+                mOrder.name = Application.mNameDateFormat.format(new Date(mOrder.createDate))
+                    + "-" + SharePrefer.getDateNum(mOrder.createDate);
                 mOrder.modifyTime = mOrder.createDate;
             }
             mOrder.createContent(mList);

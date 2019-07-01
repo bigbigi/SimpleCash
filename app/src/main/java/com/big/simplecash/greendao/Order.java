@@ -27,18 +27,20 @@ public class Order implements Serializable {
     public float transIn;
     public float transOut;
     public float discount;
+    public String name;
 
     public String outPut() {
         StringBuilder sb = new StringBuilder();
         sb.append(createDate).append("#^")
-                .append(content).append("#^")
-                .append(rate).append("#^")
-                .append(totalPurchase).append("#^")
-                .append(cost).append("#^")
-                .append(transIn).append("#^")
-                .append(transOut).append("#^")
-                .append(modifyTime).append("#^")
-                .append(discount).append("#^");
+            .append(content).append("#^")
+            .append(rate).append("#^")
+            .append(totalPurchase).append("#^")
+            .append(cost).append("#^")
+            .append(transIn).append("#^")
+            .append(transOut).append("#^")
+            .append(modifyTime).append("#^")
+            .append(discount).append("#^")
+            .append(name).append("#^");
         return sb.toString();
     }
 
@@ -55,16 +57,17 @@ public class Order implements Serializable {
             order.transOut = Float.parseFloat(fields[6]);
             order.modifyTime = Long.parseLong(fields[7]);
             order.discount = Float.parseFloat(fields[8]);
+            order.name = "导" + fields[9];
         } catch (Exception e) {
             return null;
         }
         return order;
     }
 
-    @Generated(hash = 1903335733)
+    @Generated(hash = 1097130403)
     public Order(Long id, long createDate, long modifyTime, String content,
                  float rate, float totalPurchase, float cost, float transIn,
-                 float transOut, float discount) {
+                 float transOut, float discount, String name) {
         this.id = id;
         this.createDate = createDate;
         this.modifyTime = modifyTime;
@@ -75,6 +78,7 @@ public class Order implements Serializable {
         this.transIn = transIn;
         this.transOut = transOut;
         this.discount = discount;
+        this.name = name;
     }
 
     @Generated(hash = 1105174599)
@@ -86,13 +90,13 @@ public class Order implements Serializable {
         for (SaleInfo info : list) {
             if (TextUtils.isEmpty(info.name)) continue;
             sb.append(info.name).append("|")
-                    .append(info.size).append("|")
-                    .append(info.price).append("|")
-                    .append(info.provider).append("|")
-                    .append(info.realPrice).append("|")
-                    .append(info.salePrice).append("|")
-                    .append(info.number).append("|")
-                    .append("&&");
+                .append(info.size).append("|")
+                .append(info.price).append("|")
+                .append(info.provider).append("|")
+                .append(info.realPrice).append("|")
+                .append(info.salePrice).append("|")
+                .append(info.number).append("|")
+                .append("&&");
         }
         content = sb.toString();
     }
@@ -191,6 +195,14 @@ public class Order implements Serializable {
 
     public void setDiscount(float discount) {
         this.discount = discount;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

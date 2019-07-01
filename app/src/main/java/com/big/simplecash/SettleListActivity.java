@@ -94,7 +94,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
-            holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.name.setText(info.name);
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
             holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
         }

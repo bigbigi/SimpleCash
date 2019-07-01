@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
         findViewById(R.id.add).setOnClickListener(this);
+        findViewById(R.id.edit).setOnClickListener(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
@@ -40,24 +42,45 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    InputDialog mInputDialog;
+    private InputDialog mInputDialog;
+    private EditDialog mEditDialog;
+    private boolean mIsEditMode;
 
-    @Override
-    public void onClick(View view) {
-        if (mInputDialog == null) {
-            mInputDialog = new InputDialog(this);
-            mInputDialog.setCallback(new CallBack<Order>() {
+    private void showEditDialog(Order order) {
+        if (mEditDialog == null) {
+            mEditDialog = new EditDialog(this);
+            mEditDialog.setCallback(new CallBack<Order>() {
                 @Override
                 public void onCallBack(Order order) {
-                    if (order != null) {
-                        GreenDaoUtils.insertOrder(order);
-                        mAdapter.setData(GreenDaoUtils.getOrder());
-                        mAdapter.notifyDataSetChanged();
-                    }
+                    mAdapter.notifyDataSetChanged();
                 }
             });
         }
-        mInputDialog.show();
+        mEditDialog.show(order);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.edit) {
+            mIsEditMode = !mIsEditMode;
+            final TextView text = (TextView) view;
+            text.setText(mIsEditMode ? "取消编辑" : "编辑");
+        } else {
+            if (mInputDialog == null) {
+                mInputDialog = new InputDialog(this);
+                mInputDialog.setCallback(new CallBack<Order>() {
+                    @Override
+                    public void onCallBack(Order order) {
+                        if (order != null) {
+                            GreenDaoUtils.insertOrder(order);
+                            mAdapter.setData(GreenDaoUtils.getOrder());
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+            mInputDialog.show();
+        }
     }
 
     @Override
@@ -93,7 +116,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
-            holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+            holder.name.setText(info.name);
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
             holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
         }
@@ -132,6 +155,11 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                         if (del.getVisibility() == View.VISIBLE) {
                             if (del != null) {
                                 del.setVisibility(View.GONE);
+                            }
+                        } else if (mIsEditMode) {
+                            int position = getAdapterPosition();
+                            if (position >= 0 && position < mList.size()) {
+                                showEditDialog(mList.get(position));
                             }
                         } else {
                             Intent intent = new Intent(OrderListActivity.this, SaleActivity.class);

@@ -156,6 +156,23 @@ public class GreenDaoUtils {
         return flag;
     }
 
+
+   /* public static int getOrderSize(long date) {
+        int size = 0;
+        long oneDate = 24 * 60 * 60 * 1000;
+        long dateBegin = date - date % oneDate;
+        long dateEnd = dateBegin + oneDate;
+        Log.d("big", "begin:" + dateBegin + "," + dateEnd);
+        try {
+            QueryBuilder<Order> ql = getOrderDao().queryBuilder();
+            ql.where(OrderDao.Properties.CreateDate.between(dateBegin, dateEnd));
+            size = ql.list().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
+    }*/
+
     public static void deleteOrder(Order info) {
         getOrderDao().delete(info);
     }

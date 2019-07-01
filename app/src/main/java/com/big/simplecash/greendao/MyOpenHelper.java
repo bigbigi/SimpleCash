@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 
-
 /**
  * Created by big on 2019/6/13.
  */
@@ -21,6 +20,10 @@ public class MyOpenHelper extends DaoMaster.DevOpenHelper {
                 case 2:
                     String new_column = "alter table " + "\"ORDER\"" + " add " + "discount" + " float";
                     db.execSQL(new_column);
+                    break;
+                case 3:
+                    String name = "alter table " + "\"ORDER\"" + " add " + "name" + " text";
+                    db.execSQL(name);
                     break;
             }
 
