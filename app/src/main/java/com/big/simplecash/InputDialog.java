@@ -38,7 +38,6 @@ public class InputDialog extends Dialog implements View.OnClickListener {
         getWindow().setLayout(-1, -1);
         mInput = (TextView) contentView.findViewById(R.id.input_content);
         findViewById(R.id.confirm).setOnClickListener(this);
-        findViewById(R.id.cancel).setOnClickListener(this);
     }
 
     @Override

@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/item_name"
         style="@style/itemTheme"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:text="名称" />
 
     <View
@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/item_size"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:text="规格" />
 
 
@@ -34,7 +34,7 @@
     <TextView
         android:id="@+id/item_real_price"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#00000000" />
 
     <View
@@ -46,7 +46,7 @@
     <EditText
         android:id="@+id/item_sale_price"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#00000000"
         android:digits="0123456789."
         android:inputType="number" />
@@ -59,7 +59,7 @@
     <TextView
         android:id="@+id/item_provider"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:text="店铺" />
 
     <View
@@ -73,7 +73,7 @@
         android:layout_weight="1"
         android:background="#00000000"
         android:digits="0123456789."
-        android:text="数量" />
+        android:text="量" />
 
     <View
         android:layout_width="1px"
@@ -83,13 +83,13 @@
     <TextView
         android:id="@+id/item_profit"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:text="利润" />
 
     <TextView
         android:id="@+id/item_del"
         style="@style/itemTheme"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#ff0000"
         android:gravity="center"
         android:text="删除"
