@@ -39,7 +39,7 @@ public class EditDialog extends Dialog implements View.OnClickListener {
     }
 
     private Order mOrder;
-    CallBack<Order> mCallBack;
+    private CallBack<Order> mCallBack;
 
     public void setCallback(CallBack<Order> callback) {
         mCallBack = callback;
@@ -49,9 +49,6 @@ public class EditDialog extends Dialog implements View.OnClickListener {
         super.show();
         if (mInput != null) {
             mInput.setText(order.name);
-            if (mCallBack != null) {
-                mCallBack.onCallBack(null);
-            }
         }
         mOrder = order;
     }
@@ -62,6 +59,10 @@ public class EditDialog extends Dialog implements View.OnClickListener {
         if (view.getId() == R.id.confirm) {
             if (!TextUtils.isEmpty(mInput.getText())) {
                 mOrder.name = mInput.getText().toString();
+                GreenDaoUtils.insertOrder(mOrder);
+                if (mCallBack != null) {
+                    mCallBack.onCallBack(mOrder);
+                }
             }
         }
     }
