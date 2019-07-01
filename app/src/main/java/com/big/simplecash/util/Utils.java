@@ -26,6 +26,14 @@ public class Utils {
         }
     }
 
+    public static int getTextInt(TextView textView) {
+        if (TextUtils.isEmpty(textView.getText())) {
+            return 0;
+        } else {
+            return Integer.parseInt(String.valueOf(textView.getText()));
+        }
+    }
+
     public static String getText(float f) {
         if (f == 0) {
             return "";
@@ -48,7 +56,7 @@ public class Utils {
             gzip.close();
             // 使用指定的 charsetName，通过解码字节将缓冲区内容转换为字符串
 //            return out.toString("ISO-8859-1");
-            return Base64.encodeToString(out.toByteArray(),Base64.NO_WRAP);
+            return Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP);
         } catch (IOException e) {
             e.printStackTrace();
         }

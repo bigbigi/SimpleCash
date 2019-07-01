@@ -26,6 +26,21 @@
         <item name="android:paddingLeft">2dp</item>
     </style>
 
+    <style name="edit">
+        <item name="android:background">#fff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:textColorHint">#555</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="number" parent="edit">
+        <item name="android:digits">0123456789.</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+
     <style name="itemTitle" parent="itemTheme">
         <item name="android:gravity">center</item>
     </style>

@@ -11,17 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.big.simplecash.greendao.GreenDaoUtils;
-import com.big.simplecash.greendao.MaterialInfo;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
+import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.SharePrefer;
-import com.big.simplecash.util.SimpleTextWatch;
 import com.big.simplecash.util.Utils;
 
 import java.util.ArrayList;
@@ -39,15 +37,15 @@ public class SaleActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost, mTransIn, mTransOut, mDiscount;
+    private TextView mRate, mCost, mTransIn, mTransOut, mDiscount, mSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
         findViewById(R.id.add).setOnClickListener(this);
-        findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.settle).setOnClickListener(this);
+        mSave = (TextView) findViewById(R.id.save);
         mRate = (TextView) findViewById(R.id.rate_content);
         mCost = (TextView) findViewById(R.id.cost_content);
         mSum = (TextView) findViewById(R.id.sum_content);
@@ -55,6 +53,12 @@ public class SaleActivity extends BaseActivity implements
         mTransOut = (TextView) findViewById(R.id.trans_out_content);
         mDiscount = (TextView) findViewById(R.id.discount_content);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mSave.setOnClickListener(this);
+        mRate.setOnClickListener(this);
+        mCost.setOnClickListener(this);
+        mTransIn.setOnClickListener(this);
+        mTransOut.setOnClickListener(this);
+        mDiscount.setOnClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -75,12 +79,16 @@ public class SaleActivity extends BaseActivity implements
         mAdapter.notifyDataSetChanged();
     }
 
+    private boolean mIsEditMode;
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            if (save()) {
+            if (mIsEditMode && save()) {
                 Toast.makeText(this, "订单保存成功", Toast.LENGTH_LONG).show();
             }
+            mIsEditMode = !mIsEditMode;
+            mSave.setText(mIsEditMode ? R.string.save : R.string.edit);
         } else if (view.getId() == R.id.settle) {
             if (save()) {
                 Intent intent = new Intent(this, SettlementActivity.class);
@@ -90,10 +98,25 @@ public class SaleActivity extends BaseActivity implements
                 GreenDaoUtils.deleteOrder(mOrder);
                 finish();
             }
-        } else {
+        } else if (view.getId() == R.id.settle) {
             Intent intent = new Intent(this, MaterialActivity.class);
             intent.putExtra("from", "sale");
             startActivityForResult(intent, 101);
+        } else if (mIsEditMode) {
+            final TextView inputTxt = (TextView) view;
+            String name = "";
+            if (view.getId() == R.id.rate_content) {
+                name = "汇率";
+            } else if (view.getId() == R.id.cost_content) {
+                name = "其他成本￥";
+            } else if (view.getId() == R.id.trans_in_content) {
+                name = "运费收入￥";
+            } else if (view.getId() == R.id.trans_out_content) {
+                name = "运费支出￥";
+            } else if (view.getId() == R.id.discount_content) {
+                name = "优惠HK$";
+            }
+            showSingleDialog(inputTxt, name, String.valueOf(inputTxt.getText()));
         }
 
     }
@@ -149,6 +172,8 @@ public class SaleActivity extends BaseActivity implements
             mList.add(info);
             Log.d("big", "add");
             mAdapter.notifyDataSetChanged();
+            mIsEditMode = true;
+            mSave.setText(R.string.save);
             sum();
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,7 +193,7 @@ public class SaleActivity extends BaseActivity implements
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
             if (position == mCurPos) {
-                holder.itemView.setBackgroundColor(0xffFFB6C1);
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.itemFocus));
             } else if (position % 2 != 0) {
                 holder.itemView.setBackgroundColor(0xffffffff);
             } else {
@@ -231,6 +256,9 @@ public class SaleActivity extends BaseActivity implements
                                     del.setVisibility(View.GONE);
                                 }
                             }
+                            if (mIsEditMode && mCurPos > 0 && mCurPos < mList.size()) {
+                                showSaleEditDialog(mList.get(mCurPos));
+                            }
                         }
                     });
                     del.setOnClickListener(new View.OnClickListener() {
@@ -246,42 +274,34 @@ public class SaleActivity extends BaseActivity implements
                         }
                     });
                 }
-                realPrice.addTextChangedListener(new SimpleTextWatch() {
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        int position = getAdapterPosition();
-                        if (position > 0 && position < mList.size()) {
-                            SaleInfo info = mList.get(position);
-                            if (TextUtils.isEmpty(realPrice.getText())) {
-                                info.realPrice = 0;
-                            } else {
-                                info.realPrice = Float.parseFloat(realPrice.getText().toString());
-                            }
-                            total.setText(info.realPrice * info.number + "");
-                            sum();
-                        }
-                    }
-                });
-//                }
-                num.addTextChangedListener(new SimpleTextWatch() {
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        int position = getAdapterPosition();
-                        if (position > 0 && position < mList.size()) {
-                            SaleInfo info = mList.get(position);
-                            if (TextUtils.isEmpty(charSequence)) {
-                                info.number = 0;
-                            } else {
-                                info.number = Integer.parseInt(charSequence.toString());
-                            }
-                            total.setText(info.realPrice * info.number + "");
-                            sum();
-                        }
-                    }
-                });
 
             }
 
         }
+    }
+
+    private SaleEditDialog mSaleEditDialog;
+
+    private void showSaleEditDialog(SaleInfo info) {
+        if (mSaleEditDialog == null) {
+            mSaleEditDialog = new SaleEditDialog(this);
+            mSaleEditDialog.setCallback(new CallBack<SaleInfo>() {
+                @Override
+                public void onCallBack(SaleInfo saleInfo) {
+                    sum();
+                    mAdapter.notifyItemChanged(mList.indexOf(saleInfo));
+                }
+            });
+        }
+        mSaleEditDialog.show(info);
+    }
+
+    private SingleEditDialog mSingleEditDialog;
+
+    private void showSingleDialog(TextView textView, String name, String value) {
+        if (mSingleEditDialog == null) {
+            mSingleEditDialog = new SingleEditDialog(this);
+        }
+        mSingleEditDialog.show(textView, name, value);
     }
 }

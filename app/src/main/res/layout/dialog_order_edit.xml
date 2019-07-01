@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88000000">
+
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:background="#eee"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="确定"
+        android:textColor="#333"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/num"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@id/confirm"
+        android:layout_marginTop="1px"
+        android:background="#fff"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:text="数量:"
+        android:textColor="#333"
+        android:textColorHint="#555"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/sale"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@id/num"
+        android:layout_marginTop="1px"
+        android:background="#fff"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:text="进价$:"
+        android:textColor="#333"
+        android:textColorHint="#555"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@id/sale"
+        android:layout_marginTop="1px"
+        android:background="#fff"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="20dp"
+        android:text="名称:"
+        android:textColor="#333"
+        android:textColorHint="#555"
+        android:textSize="20dp" />
+
+
+    <EditText
+        android:id="@+id/price_content"
+        style="@style/number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/sale"
+        android:layout_toRightOf="@id/sale" />
+
+    <EditText
+        android:id="@+id/num_content"
+        style="@style/number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/num"
+        android:layout_toRightOf="@id/num" />
+
+    <EditText
+        android:id="@+id/name_content"
+        style="@style/edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/name"
+        android:layout_toRightOf="@id/name" />
+
+</RelativeLayout>
+

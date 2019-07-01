@@ -188,7 +188,7 @@ public class SettlementActivity extends BaseActivity implements
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
             if (position == mCurPos) {
-                holder.itemView.setBackgroundColor(0xffFFB6C1);
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.itemFocus));
             } else if (position % 2 != 0) {
                 holder.itemView.setBackgroundColor(0xffffffff);
             } else {
@@ -210,9 +210,6 @@ public class SettlementActivity extends BaseActivity implements
 
         @Override
         public int getItemViewType(int position) {
-            if (position == 0) {
-                return R.layout.item_settle_title;
-            }
             return R.layout.item_settle;
         }
 

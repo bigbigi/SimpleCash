@@ -7,4 +7,5 @@
     <color name="itemSelected">#87CEFA</color>
     <color name="one">#fff</color>
     <color name="secondWhite">#ddd</color>
+    <color name="itemFocus">#cc87CEFA</color>
 </resources>
