@@ -70,7 +70,7 @@
         <TextView
             style="@style/itemTitle"
             android:layout_weight="2"
-            android:text="采购额度" />
+            android:text="采购额度$" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

@@ -34,6 +34,18 @@
         android:layout_weight="1"
         android:text="总价" />
 
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="#5e333333" />
+
+    <TextView
+        android:id="@+id/item_profit"
+        style="@style/itemTheme"
+        android:layout_weight="1"
+        android:text="总价"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/item_del"
         style="@style/itemTheme"

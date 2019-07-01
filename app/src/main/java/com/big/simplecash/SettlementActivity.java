@@ -37,14 +37,14 @@ import java.util.List;
  */
 
 public class SettlementActivity extends BaseActivity implements
-    View.OnClickListener {
+        View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
     private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale,
-        mDiscount, mSave;
+            mDiscount, mSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,7 +136,7 @@ public class SettlementActivity extends BaseActivity implements
             } else if (view.getId() == R.id.trans_out_content) {
                 name = "运费支出￥";
             }
-            showSingleDialog(inputTxt, name, String.valueOf(inputTxt.getText()));
+            showSingleDialog(inputTxt, name, String.valueOf(inputTxt.getText()), null);
         }
     }
 
@@ -159,10 +159,11 @@ public class SettlementActivity extends BaseActivity implements
 
     private SingleEditDialog mSingleEditDialog;
 
-    private void showSingleDialog(TextView textView, String name, String value) {
+    private void showSingleDialog(TextView textView, String name, String value, CallBack callBack) {
         if (mSingleEditDialog == null) {
             mSingleEditDialog = new SingleEditDialog(this);
         }
+        mSingleEditDialog.setCallback(callBack);
         mSingleEditDialog.show(textView, name, value);
     }
 
@@ -182,6 +183,7 @@ public class SettlementActivity extends BaseActivity implements
             mOrder.transIn = Utils.getTextFloat(mTransIn);
             mOrder.transOut = Utils.getTextFloat(mTransOut);
             mOrder.discount = Utils.getTextFloat(mDiscount);
+            mOrder.profit = Utils.getTextFloat(mProfit);
 
             GreenDaoUtils.insertSettle(mOrder);
             return true;
@@ -259,28 +261,19 @@ public class SettlementActivity extends BaseActivity implements
                         notifyItemChanged(mCurPos);
                         mCurPos = getAdapterPosition();
                         notifyItemChanged(mCurPos);
+                        if (mIsEditMode && mCurPos > 0 && mCurPos < mList.size()) {
+                            final SaleInfo info = mList.get(mCurPos);
+                            showSingleDialog(salePrice, info.name + " 售价￥", info.salePrice + "", new CallBack<Float>() {
+                                @Override
+                                public void onCallBack(Float o) {
+                                    info.salePrice = o;
+                                    notifyItemChanged(mCurPos);
+                                    sum();
+                                }
+                            });
+                        }
                     }
                 });
-
-                if (salePrice instanceof EditText) {
-                    salePrice.addTextChangedListener(new SimpleTextWatch() {
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            int position = getAdapterPosition();
-                            if (position > 0 && position < mList.size()) {
-                                SaleInfo info = mList.get(position);
-                                if (TextUtils.isEmpty(salePrice.getText())) {
-                                    info.salePrice = 0;
-                                } else {
-                                    info.salePrice = Float.parseFloat(salePrice.getText().toString());
-                                }
-                                profit.setText(String.format("%.1f", (info.salePrice - mOrder.rate * info.realPrice) * info.number) + "");
-                                sum();
-                            }
-                        }
-                    });
-                }
-
 
             }
 
@@ -306,11 +299,11 @@ public class SettlementActivity extends BaseActivity implements
         recordList.add(new ArrayList<String>());
         //total purchase and sale
         ArrayList<String> sale = new ArrayList<>();
-        sale.add("总收款￥：");
+        sale.add("货款收入￥：");
         sale.add(String.valueOf(mTotalSale.getText()));
 
         sale.add("");
-        sale.add("总采购$：");
+        sale.add("采购支出$：");
         sale.add(mOrder.totalPurchase + "");
         recordList.add(sale);
 
@@ -346,7 +339,7 @@ public class SettlementActivity extends BaseActivity implements
 
         //write
         String name = !TextUtils.isEmpty(mOrder.name) ? mOrder.name :
-            Application.mNameDateFormat.format(new Date(mOrder.createDate));
+                Application.mNameDateFormat.format(new Date(mOrder.createDate));
         String fileName = ExcelUtil.getFileName(name);
         String titles[] = {"名称", "规格", "原价$", "进价$", "售价￥", "店铺", "数量", "小计$", "利润￥"};
         ExcelUtil.initExcel(fileName, name, titles);

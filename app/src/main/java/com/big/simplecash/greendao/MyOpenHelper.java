@@ -26,6 +26,10 @@ public class MyOpenHelper extends DaoMaster.DevOpenHelper {
                         String name = "alter table " + "\"ORDER\"" + " add " + "name" + " text";
                         db.execSQL(name);
                         break;
+                    case 5:
+                        String profit = "alter table " + "\"ORDER\"" + " add " + "profit" + " float";
+                        db.execSQL(profit);
+                        break;
                 }
             }
         }catch (Exception e){

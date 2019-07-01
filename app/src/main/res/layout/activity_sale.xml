@@ -111,9 +111,7 @@
         android:layout_alignTop="@id/discount"
         android:layout_toRightOf="@id/discount"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -138,9 +136,7 @@
         android:layout_alignTop="@id/trans_in"
         android:layout_toRightOf="@id/trans_in"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -166,9 +162,7 @@
         android:layout_alignTop="@id/trans_out"
         android:layout_toRightOf="@id/trans_out"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -180,7 +174,6 @@
         android:layout_above="@id/trans_in"
         android:layout_marginBottom="1px"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
         android:text="汇率:"
         android:textColor="#fff"
@@ -194,9 +187,7 @@
         android:layout_alignTop="@id/rate"
         android:layout_toRightOf="@id/rate"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -222,9 +213,7 @@
         android:layout_alignTop="@id/cost"
         android:layout_toRightOf="@id/cost"
         android:background="#ff7f50"
-        android:digits="0123456789."
         android:gravity="left|center_vertical"
-        android:inputType="number"
         android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />

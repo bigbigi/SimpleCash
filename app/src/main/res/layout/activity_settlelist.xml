@@ -59,7 +59,17 @@
         <TextView
             style="@style/itemTitle"
             android:layout_weight="2"
-            android:text="采购额度" />
+            android:text="采购额度$" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="利润￥" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

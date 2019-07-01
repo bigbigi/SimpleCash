@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
+import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.util.CallBack;
 
 import java.text.SimpleDateFormat;
@@ -74,6 +75,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         List<Order> mList = new ArrayList<>();
+        private int mCurPos = -1;
 
         public void setData(List<Order> list) {
             if (list != null) {
@@ -91,18 +93,21 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             Order info = mList.get(position);
-            if (position % 2 == 0) {
+            if (position == mCurPos) {
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.itemFocus));
+            } else if (position % 2 == 0) {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
             if (TextUtils.isEmpty(info.name)) {
-                holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+                holder.name.setText(Application.mNameDateFormat.format(new Date(info.createDate)));
             } else {
                 holder.name.setText(info.name);
             }
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
+            holder.profit.setText(String.format("%.1f", info.profit));
+            holder.total.setText(String.format("%.1f", info.totalPurchase));
         }
 
         @Override
@@ -116,7 +121,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         }
 
         class MyHolder extends RecyclerView.ViewHolder {
-            TextView name, total, del, modify;
+            TextView name, total, del, modify, profit;
 
             public MyHolder(View itemView) {
                 super(itemView);
@@ -124,6 +129,8 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
                 total = (TextView) itemView.findViewById(R.id.item_total);
                 del = (TextView) itemView.findViewById(R.id.item_del);
                 modify = (TextView) itemView.findViewById(R.id.item_modify);
+                profit = (TextView) itemView.findViewById(R.id.item_profit);
+                profit.setVisibility(View.VISIBLE);
                 itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
@@ -136,6 +143,9 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        notifyItemChanged(mCurPos);
+                        mCurPos = getAdapterPosition();
+                        notifyItemChanged(mCurPos);
                         if (del.getVisibility() == View.VISIBLE) {
                             if (del != null) {
                                 del.setVisibility(View.GONE);
@@ -166,4 +176,15 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
             }
         }
     }
+
+//    private void sum(Order order) {
+//        float sum = 0;
+//        for (SaleInfo info : mList) {
+//            if (info.price == 0) continue;
+//            sum += info.salePrice * info.number;
+//        }
+//        float profit = sum + mOrder.transIn + mOrder.discount * mOrder.rate - mOrder.transOut - mOrder.cost - mOrder.rate * mOrder.totalPurchase;
+//        mTotalSale.setText(String.format("%.1f", sum));
+//        mProfit.setText(String.format("%.1f", profit));
+//    }
 }

@@ -94,6 +94,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         List<Order> mList = new ArrayList<>();
+        private int mCurPos = -1;
 
         public void setData(List<Order> list) {
             if (list != null) {
@@ -111,18 +112,20 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             Order info = mList.get(position);
-            if (position % 2 == 0) {
+            if (position == mCurPos) {
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.itemFocus));
+            } else if (position % 2 == 0) {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
             if (TextUtils.isEmpty(info.name)) {
-                holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+                holder.name.setText(Application.mNameDateFormat.format(new Date(info.createDate)));
             } else {
                 holder.name.setText(info.name);
             }
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
-            holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
+            holder.total.setText(String.format("%.1f", info.totalPurchase));
         }
 
         @Override
@@ -156,6 +159,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        notifyItemChanged(mCurPos);
+                        mCurPos = getAdapterPosition();
+                        notifyItemChanged(mCurPos);
                         if (del.getVisibility() == View.VISIBLE) {
                             if (del != null) {
                                 del.setVisibility(View.GONE);

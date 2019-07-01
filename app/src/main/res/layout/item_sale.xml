@@ -45,8 +45,6 @@
         style="@style/itemTheme"
         android:layout_weight="1"
         android:background="#00000000"
-        android:digits="0123456789."
-        android:inputType="number"
         android:text="进价" />
 
     <View
@@ -71,8 +69,6 @@
         style="@style/itemTheme"
         android:layout_weight="1"
         android:background="#00000000"
-        android:digits="0123456789."
-        android:inputType="number"
         android:text="数量" />
 
     <View
