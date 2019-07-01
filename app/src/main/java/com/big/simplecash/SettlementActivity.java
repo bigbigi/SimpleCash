@@ -62,7 +62,6 @@ public class SettlementActivity extends BaseActivity implements
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -191,19 +190,17 @@ public class SettlementActivity extends BaseActivity implements
             if (position == mCurPos) {
                 holder.itemView.setBackgroundColor(0xffFFB6C1);
             } else if (position % 2 != 0) {
-                holder.itemView.setBackgroundColor(0xffdddddd);
-            } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
+            } else {
+                holder.itemView.setBackgroundColor(0xffdddddd);
             }
-            if (position != 0) {
-                holder.name.setText(saleInfo.name);
-                holder.size.setText(saleInfo.size);
-                holder.salePrice.setText(Utils.getText(saleInfo.salePrice));
-                holder.provide.setText(saleInfo.provider);
-                holder.realPrice.setText(saleInfo.realPrice + "");
-                holder.num.setText(saleInfo.number + "");
-                holder.profit.setText(String.format("%.1f", (saleInfo.salePrice - mOrder.rate * saleInfo.realPrice) * saleInfo.number));
-            }
+            holder.name.setText(saleInfo.name);
+            holder.size.setText(saleInfo.size);
+            holder.salePrice.setText(Utils.getText(saleInfo.salePrice));
+            holder.provide.setText(saleInfo.provider);
+            holder.realPrice.setText(saleInfo.realPrice + "");
+            holder.num.setText(saleInfo.number + "");
+            holder.profit.setText(String.format("%.1f", (saleInfo.salePrice - mOrder.rate * saleInfo.realPrice) * saleInfo.number));
         }
 
         @Override

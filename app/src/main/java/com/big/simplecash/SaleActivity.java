@@ -56,7 +56,6 @@ public class SaleActivity extends BaseActivity implements
         mDiscount = (TextView) findViewById(R.id.discount_content);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mList.add(new SaleInfo());
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
         if (getIntent().hasExtra("data")) {
@@ -171,19 +170,17 @@ public class SaleActivity extends BaseActivity implements
             if (position == mCurPos) {
                 holder.itemView.setBackgroundColor(0xffFFB6C1);
             } else if (position % 2 != 0) {
-                holder.itemView.setBackgroundColor(0xffdddddd);
-            } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
+            } else {
+                holder.itemView.setBackgroundColor(0xffdddddd);
             }
-            if (position != 0) {
-                holder.name.setText(saleInfo.name);
-                holder.size.setText(saleInfo.size);
-                holder.price.setText(String.valueOf(saleInfo.price));
-                holder.provide.setText(saleInfo.provider);
-                holder.realPrice.setText(Utils.getText(saleInfo.realPrice));
-                holder.num.setText(saleInfo.number + "");
-                holder.total.setText(saleInfo.realPrice * saleInfo.number + "");
-            }
+            holder.name.setText(saleInfo.name);
+            holder.size.setText(saleInfo.size);
+            holder.price.setText(String.valueOf(saleInfo.price));
+            holder.provide.setText(saleInfo.provider);
+            holder.realPrice.setText(Utils.getText(saleInfo.realPrice));
+            holder.num.setText(saleInfo.number + "");
+            holder.total.setText(saleInfo.realPrice * saleInfo.number + "");
 
         }
 
@@ -194,9 +191,6 @@ public class SaleActivity extends BaseActivity implements
 
         @Override
         public int getItemViewType(int position) {
-            if (position == 0) {
-                return R.layout.item_sale_title;
-            }
             return R.layout.item_sale;
         }
 
@@ -252,42 +246,39 @@ public class SaleActivity extends BaseActivity implements
                         }
                     });
                 }
-                if (realPrice instanceof EditText) {
-                    realPrice.addTextChangedListener(new SimpleTextWatch() {
-                        @Override
-                        public void afterTextChanged(Editable editable) {
-                            int position = getAdapterPosition();
-                            if (position > 0 && position < mList.size()) {
-                                SaleInfo info = mList.get(position);
-                                if (TextUtils.isEmpty(realPrice.getText())) {
-                                    info.realPrice = 0;
-                                } else {
-                                    info.realPrice = Float.parseFloat(realPrice.getText().toString());
-                                }
-                                total.setText(info.realPrice * info.number + "");
-                                sum();
+                realPrice.addTextChangedListener(new SimpleTextWatch() {
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        int position = getAdapterPosition();
+                        if (position > 0 && position < mList.size()) {
+                            SaleInfo info = mList.get(position);
+                            if (TextUtils.isEmpty(realPrice.getText())) {
+                                info.realPrice = 0;
+                            } else {
+                                info.realPrice = Float.parseFloat(realPrice.getText().toString());
                             }
+                            total.setText(info.realPrice * info.number + "");
+                            sum();
                         }
-                    });
-                }
-                if (num instanceof EditText) {
-                    num.addTextChangedListener(new SimpleTextWatch() {
-                        @Override
-                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            int position = getAdapterPosition();
-                            if (position > 0 && position < mList.size()) {
-                                SaleInfo info = mList.get(position);
-                                if (TextUtils.isEmpty(charSequence)) {
-                                    info.number = 0;
-                                } else {
-                                    info.number = Integer.parseInt(charSequence.toString());
-                                }
-                                total.setText(info.realPrice * info.number + "");
-                                sum();
+                    }
+                });
+//                }
+                num.addTextChangedListener(new SimpleTextWatch() {
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        int position = getAdapterPosition();
+                        if (position > 0 && position < mList.size()) {
+                            SaleInfo info = mList.get(position);
+                            if (TextUtils.isEmpty(charSequence)) {
+                                info.number = 0;
+                            } else {
+                                info.number = Integer.parseInt(charSequence.toString());
                             }
+                            total.setText(info.realPrice * info.number + "");
+                            sum();
                         }
-                    });
-                }
+                    }
+                });
 
             }
 

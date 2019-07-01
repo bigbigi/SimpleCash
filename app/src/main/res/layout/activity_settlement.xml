@@ -47,13 +47,19 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/item_title"
+        layout="@layout/item_settle_title"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/title" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rate"
-        android:layout_below="@id/title" />
+        android:layout_below="@id/item_title" />
 
 
     <TextView
@@ -75,8 +81,8 @@
         android:layout_alignTop="@id/total_sale"
         android:layout_toRightOf="@id/total_sale"
         android:background="#FFA500"
-        android:maxLines="1"
         android:gravity="left|center_vertical"
+        android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
 
@@ -122,12 +128,12 @@
         android:id="@+id/sum_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@id/middle"
         android:layout_alignTop="@id/sum"
         android:layout_toRightOf="@id/sum"
-        android:layout_alignRight="@id/middle"
         android:background="#FFA500"
-        android:maxLines="1"
         android:gravity="left|center_vertical"
+        android:maxLines="1"
         android:textColor="#fff"
         android:textSize="20dp" />
 
