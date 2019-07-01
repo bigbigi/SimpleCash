@@ -67,6 +67,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         if (mAdapter != null) {
+            mAdapter.setData(GreenDaoUtils.getSettles());
             mAdapter.notifyDataSetChanged();
         }
     }

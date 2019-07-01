@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="保存"
+            android:text="@string/edit"
             android:textColor="#fff"
             android:textSize="20dp" />
 
@@ -175,7 +175,7 @@
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/trans_in_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
         android:textColor="#fff"
         android:textSize="20dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/trans_out_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

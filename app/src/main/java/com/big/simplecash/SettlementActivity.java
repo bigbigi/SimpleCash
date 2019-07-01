@@ -43,13 +43,13 @@ public class SettlementActivity extends BaseActivity implements
     private MyAdapter mAdapter;
     List<SaleInfo> mList = new ArrayList<>();
     private TextView mSum;
-    private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale, mDiscount;
+    private TextView mRate, mCost, mTransIn, mTransOut, mProfit, mTotalSale,
+        mDiscount, mSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settlement);
-        findViewById(R.id.save).setOnClickListener(this);
         findViewById(R.id.output).setOnClickListener(this);
         mRate = (TextView) findViewById(R.id.rate_content);
         mCost = (TextView) findViewById(R.id.cost_content);
@@ -59,7 +59,11 @@ public class SettlementActivity extends BaseActivity implements
         mDiscount = (TextView) findViewById(R.id.discount_content);
         mProfit = (TextView) findViewById(R.id.profit_content);
         mTotalSale = (TextView) findViewById(R.id.total_sale_content);
+        mSave = (TextView) findViewById(R.id.save);
 
+        mSave.setOnClickListener(this);
+        mTransIn.setOnClickListener(this);
+        mTransOut.setOnClickListener(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new MyAdapter();
@@ -96,9 +100,11 @@ public class SettlementActivity extends BaseActivity implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.save) {
-            if (save()) {
+            if (mIsEditMode && save()) {
                 Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
             }
+            mIsEditMode = !mIsEditMode;
+            mSave.setText(mIsEditMode ? R.string.save : R.string.edit);
         } else if (view.getId() == R.id.output) {
             showOutDialog();
         } else if (view.getId() == R.id.excel) {
@@ -122,11 +128,21 @@ public class SettlementActivity extends BaseActivity implements
                 clipboard.setPrimaryClip(ClipData.newPlainText("text", Utils.compress(mOrder.outPut())));
                 Toast.makeText(this, "导出成功\n已复制到剪切板", Toast.LENGTH_LONG).show();
             }
+        } else if (mIsEditMode) {
+            final TextView inputTxt = (TextView) view;
+            String name = "";
+            if (view.getId() == R.id.trans_in_content) {
+                name = "运费收入￥";
+            } else if (view.getId() == R.id.trans_out_content) {
+                name = "运费支出￥";
+            }
+            showSingleDialog(inputTxt, name, String.valueOf(inputTxt.getText()));
         }
     }
 
     private Order mOrder;
     private OutputDialog mOutputDialog;
+    private boolean mIsEditMode;
 
     private void showOutDialog() {
         if (mOutputDialog == null) {
@@ -139,6 +155,15 @@ public class SettlementActivity extends BaseActivity implements
             });
         }
         mOutputDialog.show();
+    }
+
+    private SingleEditDialog mSingleEditDialog;
+
+    private void showSingleDialog(TextView textView, String name, String value) {
+        if (mSingleEditDialog == null) {
+            mSingleEditDialog = new SingleEditDialog(this);
+        }
+        mSingleEditDialog.show(textView, name, value);
     }
 
     private boolean save() {
