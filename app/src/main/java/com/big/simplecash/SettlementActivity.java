@@ -318,7 +318,7 @@ public class SettlementActivity extends BaseActivity implements
         temp.add("优惠后采购$：");
         temp.add((mOrder.totalPurchase - mOrder.discount) + "");
 
-        temp.add("人民币：");
+        temp.add("*对应人民币：");
         temp.add(String.format("%.1f", (mOrder.totalPurchase - mOrder.discount) * mOrder.rate));
         recordList.add(temp);
 
@@ -326,7 +326,7 @@ public class SettlementActivity extends BaseActivity implements
         ArrayList<String> sale = new ArrayList<>();
         sale.add("货款收入￥：");
         sale.add(String.valueOf(mTotalSale.getText()));
-        sale.add("其他成本￥：");
+        sale.add("*其他成本￥：");
         sale.add(mOrder.cost + "");
         recordList.add(sale);
 
@@ -336,13 +336,15 @@ public class SettlementActivity extends BaseActivity implements
         transOut.add("运费收入￥：");
         transOut.add(mOrder.transIn + "");
 
-        transOut.add("运费支出￥：");
+        transOut.add("*运费支出￥：");
         transOut.add(mOrder.transOut + "");
         recordList.add(transOut);
 
 
         //add profit
         ArrayList<String> profit = new ArrayList<>();
+        profit.add("*总收款￥：");
+        profit.add(String.valueOf(mOrder.transIn + Utils.getTextFloat(mTotalSale)));
         profit.add("利润￥：");
         profit.add(String.valueOf(mProfit.getText()));
         recordList.add(profit);

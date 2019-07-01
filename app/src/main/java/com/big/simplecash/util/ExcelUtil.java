@@ -179,7 +179,7 @@ public class ExcelUtil {
     }
 
     public static String getFileName(String name) {
-        File file = new File(ExcelUtil.getSDPath() + "/xiaoya");
+        File file = new File(ExcelUtil.getSDPath() + "/1xiaoya");
         ExcelUtil.makeDir(file);
         return file.toString() + "/" + name + ".xls";
     }
