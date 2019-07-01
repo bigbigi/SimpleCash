@@ -168,7 +168,9 @@ public class SaleActivity extends BaseActivity implements
         @Override
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
-            if (position % 2 != 0) {
+            if (position == mCurPos) {
+                holder.itemView.setBackgroundColor(0xffFFB6C1);
+            } else if (position % 2 != 0) {
                 holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
                 holder.itemView.setBackgroundColor(0xffffffff);
@@ -198,6 +200,8 @@ public class SaleActivity extends BaseActivity implements
             return R.layout.item_sale;
         }
 
+        private int mCurPos = -1;
+
         class MyHolder extends RecyclerView.ViewHolder {
             TextView name, price, provide, size, del, total, realPrice, num;
 
@@ -225,6 +229,9 @@ public class SaleActivity extends BaseActivity implements
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            notifyItemChanged(mCurPos);
+                            mCurPos = getAdapterPosition();
+                            notifyItemChanged(mCurPos);
                             if (del.getVisibility() == View.VISIBLE) {
                                 if (del != null) {
                                     del.setVisibility(View.GONE);

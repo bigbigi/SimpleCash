@@ -188,10 +188,12 @@ public class SettlementActivity extends BaseActivity implements
         @Override
         public void onBindViewHolder(MyAdapter.MyHolder holder, int position) {
             SaleInfo saleInfo = mList.get(position);
-            if (position % 2 != 0) {
-                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_second_sel));
+            if (position == mCurPos) {
+                holder.itemView.setBackgroundColor(0xffFFB6C1);
+            } else if (position % 2 != 0) {
+                holder.itemView.setBackgroundColor(0xffdddddd);
             } else {
-                holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
+                holder.itemView.setBackgroundColor(0xffffffff);
             }
             if (position != 0) {
                 holder.name.setText(saleInfo.name);
@@ -217,6 +219,8 @@ public class SettlementActivity extends BaseActivity implements
             return R.layout.item_settle;
         }
 
+        private int mCurPos = -1;
+
         class MyHolder extends RecyclerView.ViewHolder {
             TextView name, salePrice, provide, size, profit, realPrice, num;
 
@@ -229,7 +233,15 @@ public class SettlementActivity extends BaseActivity implements
                 realPrice = (TextView) itemView.findViewById(R.id.item_real_price);
                 num = (TextView) itemView.findViewById(R.id.item_num);
                 profit = (TextView) itemView.findViewById(R.id.item_profit);
+                itemView.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View v) {
+                        notifyItemChanged(mCurPos);
+                        mCurPos = getAdapterPosition();
+                        notifyItemChanged(mCurPos);
+                    }
+                });
 
                 if (salePrice instanceof EditText) {
                     salePrice.addTextChangedListener(new SimpleTextWatch() {
@@ -314,7 +326,7 @@ public class SettlementActivity extends BaseActivity implements
         recordList.add(profit);
 
         //write
-        String name=!TextUtils.isEmpty(mOrder.name)?mOrder.name:
+        String name = !TextUtils.isEmpty(mOrder.name) ? mOrder.name :
             Application.mNameDateFormat.format(new Date(mOrder.createDate));
         String fileName = ExcelUtil.getFileName(name);
         String titles[] = {"名称", "规格", "原价$", "进价$", "售价￥", "店铺", "数量", "小计$", "利润￥"};
