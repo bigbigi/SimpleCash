@@ -42,7 +42,7 @@ public class SettleListActivity extends BaseActivity implements View.OnClickList
         mAdapter.setData(GreenDaoUtils.getSettles());
     }
 
-    InputDialog mInputDialog;
+    private InputDialog mInputDialog;
 
     @Override
     public void onClick(View view) {

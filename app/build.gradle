@@ -35,4 +35,5 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'org.greenrobot:greendao:3.2.0'
+    compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
 }

@@ -57,8 +57,13 @@ public class Order implements Serializable {
             order.transOut = Float.parseFloat(fields[6]);
             order.modifyTime = Long.parseLong(fields[7]);
             order.discount = Float.parseFloat(fields[8]);
-            order.name = "导" + fields[9];
+            if (fields.length >= 10) {
+                order.name = "导" + fields[9];
+            } else {
+                order.name = "导";
+            }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
         return order;
