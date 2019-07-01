@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             mEditDialog.setCallback(new CallBack<Order>() {
                 @Override
                 public void onCallBack(Order order) {
-                    Log.d("big","onCallBack:");
+                    Log.d("big", "onCallBack:");
                     mAdapter.notifyDataSetChanged();
                 }
             });
@@ -115,7 +116,11 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             } else {
                 holder.itemView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_item_sel));
             }
-            holder.name.setText(info.name);
+            if (TextUtils.isEmpty(info.name)) {
+                holder.name.setText(Application.mSimpleDateFormat.format(new Date(info.createDate)));
+            } else {
+                holder.name.setText(info.name);
+            }
             holder.modify.setText(Application.mSimpleDateFormat.format(new Date(info.modifyTime)));
             holder.total.setText(String.format("HK$ %.1f", info.totalPurchase));
         }

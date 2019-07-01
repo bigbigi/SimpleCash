@@ -22,12 +22,14 @@ import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.material.MaterialActivity;
 import com.big.simplecash.util.Base64;
+import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.ExcelUtil;
 import com.big.simplecash.util.SimpleTextWatch;
 import com.big.simplecash.util.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,90 +101,46 @@ public class SettlementActivity extends BaseActivity implements
                 Toast.makeText(this, "结算保存成功", Toast.LENGTH_LONG).show();
             }
         } else if (view.getId() == R.id.output) {
-           /* if (save()) {
+            showOutDialog();
+        } else if (view.getId() == R.id.excel) {
+            new Thread() {
+                @Override
+                public void run() {
+                    final String name = doExcel();
+                    if (!TextUtils.isEmpty(name)) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SettlementActivity.this, "导出成功:\n" + name, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+            }.start();
+        } else if (view.getId() == R.id.data) {
+            if (save()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 clipboard.setPrimaryClip(ClipData.newPlainText("text", Utils.compress(mOrder.outPut())));
-                Toast.makeText(this, "导出成功", Toast.LENGTH_LONG).show();
-            }*/
-            doExcel();
-        } else {
-            Intent intent = new Intent(this, MaterialActivity.class);
-            intent.putExtra("from", "sale");
-            startActivityForResult(intent, 101);
+                Toast.makeText(this, "导出成功\n已复制到剪切板", Toast.LENGTH_LONG).show();
+            }
         }
-
-    }
-
-    private void doExcel() {
-        ArrayList<ArrayList<String>> recordList = new ArrayList<>();
-        for (int i = 1; i < mList.size(); i++) {
-            SaleInfo info = mList.get(i);
-            ArrayList<String> beanList = new ArrayList<String>();
-            beanList.add(info.name);
-            beanList.add(info.size);
-            beanList.add(info.price + "");
-            beanList.add(info.realPrice + "");
-            beanList.add(info.salePrice + "");
-            beanList.add(info.provider);
-            beanList.add(info.number + "");
-            beanList.add(info.realPrice * info.number + "");
-            beanList.add(String.format("%.1f", (info.salePrice - mOrder.rate * info.realPrice) * info.number));
-            recordList.add(beanList);
-        }
-        recordList.add(new ArrayList<String>());
-        //total purchase
-        ArrayList<String> total = new ArrayList<>();
-        total.add("总采购$：");
-        total.add(mOrder.totalPurchase + "");
-        recordList.add(total);
-        //total sale
-        ArrayList<String> sale = new ArrayList<>();
-        sale.add("总收款￥：");
-        sale.add(String.valueOf(mTotalSale.getText()));
-        recordList.add(sale);
-        //discount
-        ArrayList<String> discount = new ArrayList<>();
-        discount.add("优惠$：");
-        discount.add(mOrder.discount + "");
-        recordList.add(discount);
-        //add rate
-        ArrayList<String> rate = new ArrayList<>();
-        rate.add("汇率：");
-        rate.add(mOrder.rate + "");
-        recordList.add(rate);
-        //add transIn
-        ArrayList<String> transIn = new ArrayList<>();
-        transIn.add("运费收入：");
-        transIn.add(mOrder.transIn + "");
-        recordList.add(transIn);
-        //add transOut
-        ArrayList<String> transOut = new ArrayList<>();
-        transOut.add("运费支出：");
-        transOut.add(mOrder.transOut + "");
-        recordList.add(transOut);
-
-        //add cost
-        ArrayList<String> cost = new ArrayList<>();
-        cost.add("路费等其他成本：");
-        cost.add(mOrder.cost + "");
-        recordList.add(cost);
-        //add profit
-        ArrayList<String> profit = new ArrayList<>();
-        profit.add("利润￥：");
-        profit.add(String.valueOf(mProfit.getText()));
-        recordList.add(profit);
-
-        //write
-
-        File file = new File(ExcelUtil.getSDPath() + "/xiaoya");
-        ExcelUtil.makeDir(file);
-        String fileName = file.toString() + "/" + mOrder.name + ".xls";
-        String titles[] = {"名称", "规格", "原价$", "进价$", "售价￥", "店铺", "数量", "小计$", "利润￥"};
-        ExcelUtil.initExcel(fileName, titles);
-        ExcelUtil.writeObjListToExcel(recordList, fileName, this);
     }
 
     private Order mOrder;
+    private OutputDialog mOutputDialog;
+
+    private void showOutDialog() {
+        if (mOutputDialog == null) {
+            mOutputDialog = new OutputDialog(this);
+            mOutputDialog.setCallback(new CallBack<View>() {
+                @Override
+                public void onCallBack(View view) {
+                    onClick(view);
+                }
+            });
+        }
+        mOutputDialog.show();
+    }
 
     private boolean save() {
         if (TextUtils.isEmpty(mRate.getText()) || mList.size() <= 1) {
@@ -295,6 +253,76 @@ public class SettlementActivity extends BaseActivity implements
 
             }
 
+        }
+    }
+
+    private String doExcel() {
+        ArrayList<ArrayList<String>> recordList = new ArrayList<>();
+        for (int i = 1; i < mList.size(); i++) {
+            SaleInfo info = mList.get(i);
+            ArrayList<String> beanList = new ArrayList<String>();
+            beanList.add(info.name);
+            beanList.add(info.size);
+            beanList.add(info.price + "");
+            beanList.add(info.realPrice + "");
+            beanList.add(info.salePrice + "");
+            beanList.add(info.provider);
+            beanList.add(info.number + "");
+            beanList.add(info.realPrice * info.number + "");
+            beanList.add(String.format("%.1f", (info.salePrice - mOrder.rate * info.realPrice) * info.number));
+            recordList.add(beanList);
+        }
+        recordList.add(new ArrayList<String>());
+        //total purchase and sale
+        ArrayList<String> sale = new ArrayList<>();
+        sale.add("总收款￥：");
+        sale.add(String.valueOf(mTotalSale.getText()));
+
+        sale.add("");
+        sale.add("总采购$：");
+        sale.add(mOrder.totalPurchase + "");
+        recordList.add(sale);
+
+        //add transOut and transIn
+        ArrayList<String> transOut = new ArrayList<>();
+        transOut.add("运费收入￥：");
+        transOut.add(mOrder.transIn + "");
+
+        transOut.add("");
+        transOut.add("运费支出￥：");
+        transOut.add(mOrder.transOut + "");
+        recordList.add(transOut);
+        //discount and cost
+        ArrayList<String> discount = new ArrayList<>();
+        discount.add("优惠$：");
+        discount.add(mOrder.discount + "");
+        discount.add("");
+
+        discount.add("其他成本￥：");
+        discount.add(mOrder.cost + "");
+        recordList.add(discount);
+        //add rate
+        ArrayList<String> rate = new ArrayList<>();
+        rate.add("汇率：");
+        rate.add(mOrder.rate + "");
+        recordList.add(rate);
+
+        //add profit
+        ArrayList<String> profit = new ArrayList<>();
+        profit.add("利润￥：");
+        profit.add(String.valueOf(mProfit.getText()));
+        recordList.add(profit);
+
+        //write
+        String name=!TextUtils.isEmpty(mOrder.name)?mOrder.name:
+            Application.mNameDateFormat.format(new Date(mOrder.createDate));
+        String fileName = ExcelUtil.getFileName(name);
+        String titles[] = {"名称", "规格", "原价$", "进价$", "售价￥", "店铺", "数量", "小计$", "利润￥"};
+        ExcelUtil.initExcel(fileName, name, titles);
+        if (ExcelUtil.writeObjListToExcel(recordList, fileName, this)) {
+            return fileName;
+        } else {
+            return null;
         }
     }
 }

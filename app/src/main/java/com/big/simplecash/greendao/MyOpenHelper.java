@@ -15,18 +15,21 @@ public class MyOpenHelper extends DaoMaster.DevOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
-            switch (newVersion) {
-                case 2:
-                    String new_column = "alter table " + "\"ORDER\"" + " add " + "discount" + " float";
-                    db.execSQL(new_column);
-                    break;
-                case 3:
-                    String name = "alter table " + "\"ORDER\"" + " add " + "name" + " text";
-                    db.execSQL(name);
-                    break;
+        try {
+            if (newVersion > oldVersion) {
+                switch (newVersion) {
+                    case 2:
+                        String new_column = "alter table " + "\"ORDER\"" + " add " + "discount" + " float";
+                        db.execSQL(new_column);
+                        break;
+                    case 3:
+                        String name = "alter table " + "\"ORDER\"" + " add " + "name" + " text";
+                        db.execSQL(name);
+                        break;
+                }
             }
-
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }

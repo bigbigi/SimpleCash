@@ -73,7 +73,7 @@ public class ExcelUtil {
      * @param fileName
      * @param colName
      */
-    public static void initExcel(String fileName, String[] colName) {
+    public static void initExcel(String fileName, String sheetName, String[] colName) {
         format();
         WritableWorkbook workbook = null;
         try {
@@ -82,7 +82,7 @@ public class ExcelUtil {
                 file.createNewFile();
             }
             workbook = Workbook.createWorkbook(file);
-            WritableSheet sheet = workbook.createSheet("成绩表", 0);
+            WritableSheet sheet = workbook.createSheet(sheetName, 0);
             //创建标题栏
             sheet.addCell((WritableCell) new Label(0, 0, fileName, arial14format));
             for (int col = 0; col < colName.length; col++) {
@@ -105,7 +105,8 @@ public class ExcelUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> void writeObjListToExcel(List<T> objList, String fileName, Context c) {
+    public static <T> boolean writeObjListToExcel(List<T> objList, String fileName, Context c) {
+        boolean success = false;
         if (objList != null && objList.size() > 0) {
             WritableWorkbook writebook = null;
             InputStream in = null;
@@ -135,7 +136,7 @@ public class ExcelUtil {
                 }
 
                 writebook.write();
-                Toast.makeText(c, "Success", Toast.LENGTH_SHORT).show();
+                success = true;
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -157,6 +158,7 @@ public class ExcelUtil {
             }
 
         }
+        return success;
     }
 
     public static String getSDPath() {
@@ -174,6 +176,12 @@ public class ExcelUtil {
             makeDir(dir.getParentFile());
         }
         dir.mkdir();
+    }
+
+    public static String getFileName(String name) {
+        File file = new File(ExcelUtil.getSDPath() + "/xiaoya");
+        ExcelUtil.makeDir(file);
+        return file.toString() + "/" + name + ".xls";
     }
 
 }
