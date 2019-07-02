@@ -30,8 +30,9 @@ public class SharePrefer {
     public static int getDateNum(long date) {
         int count;
         long history = getLong(ORDER_NUM, 0);
+        long historyBegin = history - history % oneDate;
         long dateBegin = date - date % oneDate;
-        if (Math.abs(history - dateBegin) >= oneDate) {
+        if (Math.abs(historyBegin - dateBegin) >= oneDate) {
             count = 1;
             putLong(ORDER_NUM, dateBegin + 1);
         } else {
