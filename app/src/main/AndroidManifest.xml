@@ -46,6 +46,11 @@
             android:name="com.big.simplecash.settle.SettleListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.big.simplecash.material.MaterialHistory"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

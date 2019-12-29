@@ -20,6 +20,7 @@ import com.big.simplecash.R;
 import com.big.simplecash.SingleEditDialog;
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
+import com.big.simplecash.greendao.SaleHistoryInfo;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.ExcelUtil;
@@ -184,6 +185,16 @@ public class SettlementActivity extends BaseActivity implements
             mOrder.profit = Utils.getTextFloat(mProfit);
 
             GreenDaoUtils.insertSettle(mOrder);
+            new Thread() {
+                @Override
+                public void run() {
+                    for (SaleInfo info : mList) {
+                        SaleHistoryInfo historyInfo = new SaleHistoryInfo(info);
+                        historyInfo.createTime = mOrder.createDate;
+                        GreenDaoUtils.insertHistoryInfo(historyInfo);
+                    }
+                }
+            }.start();
             return true;
         }
     }

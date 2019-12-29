@@ -166,6 +166,13 @@ public class MaterialActivity extends BaseActivity implements View.OnClickListen
                                 Application.mTempInfo = mList.get(getAdapterPosition());
                                 setResult(100);
                                 finish();
+                            } else {
+                                MaterialInfo info = mList.get(getAdapterPosition());
+                                Intent intent = new Intent(MaterialActivity.this, MaterialHistory.class);
+                                intent.putExtra("name", info.getName());
+                                intent.putExtra("provider", info.getProvider());
+                                intent.putExtra("size", info.getSize());
+                                startActivity(intent);
                             }
                         }
                     });

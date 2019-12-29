@@ -242,4 +242,76 @@ public class GreenDaoUtils {
     public static void deleteSettle(Order info) {
         getSettleDao().delete(info);
     }
+
+    /******************商品进出历史********************/
+    private static SaleHistoryInfoDao getHistoryDao() {
+        return GreenDaoManager.getInstance().getHistoryDao();
+    }
+
+
+    public static List<SaleHistoryInfo> getHistorys(String name, String provider, String size) {
+        List<SaleHistoryInfo> list = new ArrayList<>();
+        try {
+            QueryBuilder<SaleHistoryInfo> ql = getHistoryDao().queryBuilder();
+            list = ql.where(SaleHistoryInfoDao.Properties.Name.eq(name))
+                    .where(SaleHistoryInfoDao.Properties.Size.eq(size))
+                    .orderDesc(SaleHistoryInfoDao.Properties.CreateTime)
+                    .orderDesc(SaleHistoryInfoDao.Properties.Provider)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "getRecord list =" + list);
+        return list;
+    }
+
+    public static void insertHistoryInfo(SaleHistoryInfo record) {
+        if (record == null) {
+            return;
+        }
+        boolean flag = false;
+        try {
+            if (!updateHistory(record)) {
+                Log.i(TAG, "insertRecord real insert ");
+                getHistoryDao().insert(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "insertRecord flag = " + flag);
+        }
+
+    }
+
+    private static boolean updateHistory(SaleHistoryInfo record) {
+        if (record == null) {
+            return false;
+        }
+        boolean flag = false;
+        try {
+            QueryBuilder<SaleHistoryInfo> ql = getHistoryDao().queryBuilder();
+            ql.where(SaleHistoryInfoDao.Properties.CreateTime.eq(record.createTime))
+                    .where(SaleHistoryInfoDao.Properties.Name.eq(record.name))
+                    .where(SaleHistoryInfoDao.Properties.Provider.eq(record.provider))
+                    .where(SaleHistoryInfoDao.Properties.Size.eq(record.size));
+            List<SaleHistoryInfo> list = ql.limit(1).list();
+            Log.i(TAG, "updateRecord list1 = " + list);
+            if (!ListUtils.isEmpty(list)) {
+                record.id = list.get(0).id;
+                Log.i(TAG, "updateRecord record._id = " + record.id);
+                getHistoryDao().update(record);
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Log.i(TAG, "updateRecord flag = " + flag);
+        }
+        return flag;
+    }
+
+    public static void delHistory(SaleHistoryInfo info) {
+        getHistoryDao().delete(info);
+    }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.big.simplecash.R;
 import com.big.simplecash.greendao.SaleInfo;
 import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.Utils;

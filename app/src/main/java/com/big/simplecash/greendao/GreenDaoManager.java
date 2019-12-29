@@ -16,6 +16,7 @@ public class GreenDaoManager {
     public static final String sDBRECORD = "material.db";
     public static final String ORDER_DB = "order.db";
     public static final String SETTLE_DB = "settle.db";
+    public static final String HISTORY_DB = "history.db";
 
 
     private static GreenDaoManager mInstance;
@@ -67,6 +68,15 @@ public class GreenDaoManager {
     public OrderDao getSettleDao() {
         try {
             return getDaoSession(SETTLE_DB).getOrderDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public SaleHistoryInfoDao getHistoryDao() {
+        try {
+            return getDaoSession(HISTORY_DB).getSaleHistoryInfoDao();
         } catch (Exception e) {
             e.printStackTrace();
         }

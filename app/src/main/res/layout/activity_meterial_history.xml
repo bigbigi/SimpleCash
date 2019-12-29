@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center"
+    tools:context="com.big.simplecash.MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#3CB371"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/edit"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:gravity="center"-->
+<!--        android:paddingLeft="20dp"-->
+<!--        android:paddingRight="10dp"-->
+<!--        android:text="编辑"-->
+<!--        android:textColor="#fff"-->
+<!--        android:textSize="16dp" />-->
+
+
+    <LinearLayout
+        android:id="@+id/navi"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/title">
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="日期" />
+
+        <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="规格" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="店铺" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="进价$" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#5e333333" />
+
+        <TextView
+            style="@style/itemTitle"
+            android:layout_weight="2"
+            android:text="售价￥" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/navi" />
+
+</RelativeLayout>
