@@ -256,7 +256,6 @@ public class GreenDaoUtils {
             list = ql.where(SaleHistoryInfoDao.Properties.Name.eq(name))
                     .where(SaleHistoryInfoDao.Properties.Size.eq(size))
                     .orderDesc(SaleHistoryInfoDao.Properties.CreateTime)
-                    .orderDesc(SaleHistoryInfoDao.Properties.Provider)
                     .list();
         } catch (Exception e) {
             e.printStackTrace();

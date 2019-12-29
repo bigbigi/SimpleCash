@@ -19,15 +19,17 @@ import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.SaleHistoryInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class MaterialHistory extends BaseActivity {
+public class MaterialHistory extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     private TextView mTitleTxt;
-
+    private List<SaleHistoryInfo> mList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +43,33 @@ public class MaterialHistory extends BaseActivity {
         String name = getIntent().getStringExtra("name");
         String provider = getIntent().getStringExtra("provider");
         String size = getIntent().getStringExtra("size");
-        mAdapter.setData(GreenDaoUtils.getHistorys(name, provider, size));
+        mList = GreenDaoUtils.getHistorys(name, provider, size);
+        mAdapter.setData(mList);
         mTitleTxt.setText(name);
+        findViewById(R.id.date).setOnClickListener(this);
+        findViewById(R.id.provider).setOnClickListener(this);
+        findViewById(R.id.size).setOnClickListener(this);
+        findViewById(R.id.price).setOnClickListener(this);
+        findViewById(R.id.salePrice).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mList == null || mList.isEmpty()) return;
+        if (v.getId() == R.id.date) {
+            Collections.sort(mList, mTimeComparetor);
+        } else if (v.getId() == R.id.provider) {
+            Collections.sort(mList, mProviderComparetor);
+        } else if (v.getId() == R.id.size) {
+            Collections.sort(mList, mSizeComparetor);
+        } else if (v.getId() == R.id.price) {
+            Collections.sort(mList, mPriceComparetor);
+        } else if (v.getId() == R.id.salePrice) {
+            Collections.sort(mList, mSaleComparetor);
+        }
+        mAdapter.notifyDataSetChanged();
+        REVER = !REVER;
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
@@ -137,4 +164,67 @@ public class MaterialHistory extends BaseActivity {
             }
         }
     }
+
+    private static boolean REVER = false;
+    public static Comparator mTimeComparetor = new Comparator<SaleHistoryInfo>() {
+        @Override
+        public int compare(SaleHistoryInfo o1, SaleHistoryInfo o2) {
+            if (o1.createTime < o2.createTime) {
+                return REVER ? 1 : -1;
+            } else if (o1.createTime > o2.createTime) {
+                return REVER ? -1 : 1;
+            } else {
+                return 0;
+            }
+        }
+    };
+    public static Comparator mProviderComparetor = new Comparator<SaleHistoryInfo>() {
+        @Override
+        public int compare(SaleHistoryInfo o1, SaleHistoryInfo o2) {
+            if (o1.provider.compareTo(o2.provider) < 0) {
+                return REVER ? 1 : -1;
+            } else if (o1.provider.compareTo(o2.provider) > 0) {
+                return REVER ? -1 : 1;
+            } else {
+                return 0;
+            }
+        }
+    };
+
+    public static Comparator mSizeComparetor = new Comparator<SaleHistoryInfo>() {
+        @Override
+        public int compare(SaleHistoryInfo o1, SaleHistoryInfo o2) {
+            if (o1.size.compareTo(o2.size) < 0) {
+                return REVER ? 1 : -1;
+            } else if (o1.size.compareTo(o2.size) > 0) {
+                return REVER ? -1 : 1;
+            } else {
+                return 0;
+            }
+        }
+    };
+    public static Comparator mPriceComparetor = new Comparator<SaleHistoryInfo>() {
+        @Override
+        public int compare(SaleHistoryInfo o1, SaleHistoryInfo o2) {
+            if (o1.realPrice < o2.realPrice) {
+                return REVER ? 1 : -1;
+            } else if (o1.realPrice > o2.realPrice) {
+                return REVER ? -1 : 1;
+            } else {
+                return 0;
+            }
+        }
+    };
+    public static Comparator mSaleComparetor = new Comparator<SaleHistoryInfo>() {
+        @Override
+        public int compare(SaleHistoryInfo o1, SaleHistoryInfo o2) {
+            if (o1.salePrice < o2.salePrice) {
+                return REVER ? 1 : -1;
+            } else if (o1.salePrice > o2.salePrice) {
+                return REVER ? -1 : 1;
+            } else {
+                return 0;
+            }
+        }
+    };
 }

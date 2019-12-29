@@ -36,6 +36,7 @@
         android:layout_below="@id/title">
 
         <TextView
+            android:id="@+id/date"
             style="@style/itemTitle"
             android:layout_weight="2"
             android:text="日期" />
@@ -46,6 +47,7 @@
         android:background="#5e333333" />
 
         <TextView
+            android:id="@+id/size"
             style="@style/itemTitle"
             android:layout_weight="2"
             android:text="规格" />
@@ -56,6 +58,7 @@
             android:background="#5e333333" />
 
         <TextView
+            android:id="@+id/provider"
             style="@style/itemTitle"
             android:layout_weight="2"
             android:text="店铺" />
@@ -66,6 +69,7 @@
             android:background="#5e333333" />
 
         <TextView
+            android:id="@+id/price"
             style="@style/itemTitle"
             android:layout_weight="2"
             android:text="进价$" />
@@ -76,6 +80,7 @@
             android:background="#5e333333" />
 
         <TextView
+            android:id="@+id/salePrice"
             style="@style/itemTitle"
             android:layout_weight="2"
             android:text="售价￥" />
