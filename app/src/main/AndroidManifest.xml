@@ -31,19 +31,19 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.big.simplecash.SaleActivity"
+            android:name="com.big.simplecash.order.SaleActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.big.simplecash.OrderListActivity"
+            android:name="com.big.simplecash.order.OrderListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.big.simplecash.SettlementActivity"
+            android:name="com.big.simplecash.settle.SettlementActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.big.simplecash.SettleListActivity"
+            android:name="com.big.simplecash.settle.SettleListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 

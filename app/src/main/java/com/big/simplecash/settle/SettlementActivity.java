@@ -1,33 +1,31 @@
-package com.big.simplecash;
+package com.big.simplecash.settle;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.big.simplecash.Application;
+import com.big.simplecash.BaseActivity;
+import com.big.simplecash.OutputDialog;
+import com.big.simplecash.R;
+import com.big.simplecash.SingleEditDialog;
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
-import com.big.simplecash.material.MaterialActivity;
-import com.big.simplecash.util.Base64;
 import com.big.simplecash.util.CallBack;
 import com.big.simplecash.util.ExcelUtil;
 import com.big.simplecash.util.SimpleTextWatch;
 import com.big.simplecash.util.Utils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

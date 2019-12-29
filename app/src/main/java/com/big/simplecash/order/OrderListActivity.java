@@ -1,4 +1,4 @@
-package com.big.simplecash;
+package com.big.simplecash.order;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.big.simplecash.Application;
+import com.big.simplecash.BaseActivity;
+import com.big.simplecash.EditDialog;
+import com.big.simplecash.InputDialog;
+import com.big.simplecash.R;
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.util.CallBack;

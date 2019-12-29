@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.big.simplecash.material.MaterialActivity;
+import com.big.simplecash.order.OrderListActivity;
+import com.big.simplecash.order.SaleActivity;
+import com.big.simplecash.settle.SettleListActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

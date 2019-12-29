@@ -1,11 +1,10 @@
-package com.big.simplecash;
+package com.big.simplecash.order;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.big.simplecash.Application;
+import com.big.simplecash.BaseActivity;
+import com.big.simplecash.R;
+import com.big.simplecash.settle.SettlementActivity;
+import com.big.simplecash.SingleEditDialog;
 import com.big.simplecash.greendao.GreenDaoUtils;
 import com.big.simplecash.greendao.Order;
 import com.big.simplecash.greendao.SaleInfo;
